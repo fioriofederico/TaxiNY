@@ -33,14 +33,17 @@ if __name__=='__main__':
         #columns= (input('scrivere i gli indici delle colonne di interesse separate da uno spazio: '))
         #columns=columns.split(' ')
         #imposto e selezione le colonne del file che volgio analizzare
+        zone_id=leggi_file.leggi_file_csv('./inputfile/taxi+_zone_lookup.csv')
+        numero_borough=analisi_dati.numero_viaggi_al_giorno(zone_id['Borough'])
         columns =  ["tpep_pickup_datetime", "tpep_dropoff_datetime", "PULocationID", "DOLocationID"]
         #richiama il metodo che filtra il dataframe
         dati_filtrati_jenuary=analisi_dati.filtra_dataFrame(dati_taxi, columns)
         
         
+        
         #aggiungo un series al dataframe in cui le data delle partenze vengono sostituite da timestamp
         #dati_filtrati_jenuary["ts_pickup"]=dati_filtrati_jenuary['tpep_pickup_datetime'].apply(converti_timestamp)
-        dati_filtrati_jenuary["ts_pickup"]=dati_filtrati_jenuary['tpep_pickup_datetime'].apply(converti_solo_data)
-        numero_corse_giornaliere=analisi_dati.numero_viaggi_al_giorno(dati_filtrati_jenuary["ts_pickup"])
+        dati_filtrati_jenuary["data_pickup"]=dati_filtrati_jenuary['tpep_pickup_datetime'].apply(converti_solo_data)
+        numero_corse_giornaliere=analisi_dati.numero_viaggi_al_giorno(dati_filtrati_jenuary["data_pickup"])
     else:
         print("File non presente verificare che il nominativo corrisponda al nome originale del file presente nel dossiet")
