@@ -10,7 +10,16 @@ from analisi_dati import analisi_dati
 import os
 import time
 
-
+def coverti_location_id(X,m=dict):
+    """
+    funzione aplicabile ad una series, che riconsce gli id delle location 
+    presi dal csv e crea una series con i borough corrospondenti
+    """
+    for i in m.keys():
+        for j in range(len(m[i])):
+            if X == m[i][j]:
+                X=i
+                return X
 #funzione che converte stringhe di data ed ora in timestamp
 def converti_timestamp(X):
     ts = time.mktime(time.strptime(str(X), "%Y-%m-%d %H:%M:%S"))
@@ -34,7 +43,8 @@ if __name__=='__main__':
         #columns=columns.split(' ')
         #imposto e selezione le colonne del file che volgio analizzare
         zone_id=leggi_file.leggi_file_csv('./inputfile/taxi+_zone_lookup.csv')
-        numero_borough=analisi_dati.numero_viaggi_al_giorno(zone_id['Borough'])
+        borough_id=analisi_dati.borough_id_finder(zone_id['Borough'])
+        
         columns =  ["tpep_pickup_datetime", "tpep_dropoff_datetime", "PULocationID", "DOLocationID"]
         #richiama il metodo che filtra il dataframe
         dati_filtrati_jenuary=analisi_dati.filtra_dataFrame(dati_taxi, columns)
@@ -43,6 +53,7 @@ if __name__=='__main__':
         
         #aggiungo un series al dataframe in cui le data delle partenze vengono sostituite da timestamp
         #dati_filtrati_jenuary["ts_pickup"]=dati_filtrati_jenuary['tpep_pickup_datetime'].apply(converti_timestamp)
+        dati_filtrati_jenuary['Pickup_Borough']=dati_filtrati_jenuary["PULocationID"].apply(coverti_location_id,m=borough_id)
         dati_filtrati_jenuary["data_pickup"]=dati_filtrati_jenuary['tpep_pickup_datetime'].apply(converti_solo_data)
         numero_corse_giornaliere=analisi_dati.numero_viaggi_al_giorno(dati_filtrati_jenuary["data_pickup"])
     else:
