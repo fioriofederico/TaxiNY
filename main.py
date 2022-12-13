@@ -36,42 +36,5 @@ if __name__=='__main__':
     
     #aggiungo un series al dataframe in cui le data delle partenze vengono sostituite da timestamp
     #dati_filtrati_jenuary["ts_pickup"]=dati_filtrati_jenuary['tpep_pickup_datetime'].apply(converti_timestamp)
-    
     dati_filtrati_jenuary["ts_pickup"]=dati_filtrati_jenuary['tpep_pickup_datetime'].apply(converti_solo_data)
     numero_corse_giornaliere=analisi_dati.numero_viaggi_al_giorno(dati_filtrati_jenuary["ts_pickup"])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#lettura_file.percorsoFile(percorsoFile)
-#dataTaxi=lettura_file.lettura_file_parquet(percorsoFile)
-
-#if __name__=='main':
-#data= pd.read_parquet('C:/Users/antos/Desktop/python/Python Scripts/GitHub/progetto1/dataTaxi/yellow_tripdata_2022-01.parquet')
-    
-    
-#
-
-
