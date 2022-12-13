@@ -81,6 +81,23 @@ class analisi_dati():
             else:
                 numero_corse_giornaliere[str(b)]=1
         return numero_corse_giornaliere
+    def borough_id_finder(series):
+        """
+        Prende in ingresso i dati codificati da conversione_dati() e il giorno che voglio considerare
+        Calcolo la somma del numero di viaggi effettuati nel giorno che viene richiesto nel main
+        
+        
+        Returns: numeroViaggi 
+              somma del numero di viaggi al giorno (per il giorno considerato) 
+        """
+        borough_id={}
+        for a,b in series.items():
+            if str(b) in borough_id.keys():
+                borough_id[str(b)].append(a+1)
+            else:
+                borough_id[str(b)]=[a+1]
+        return borough_id
+    
     
     def numero_viaggi_al_mese():
         
