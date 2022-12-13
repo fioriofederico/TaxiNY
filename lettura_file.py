@@ -61,17 +61,6 @@ class leggi_file():
         """
         dati_taxi= pd.read_csv(percorsoFile, sep= ";")
         return dati_taxi
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
 
 #numero medio di viaggi registrati ogni giorno

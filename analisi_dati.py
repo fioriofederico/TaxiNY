@@ -27,10 +27,7 @@ class analisi_dati():
         """
     def filtra_mese_corretto(dati_taxi,indcol=str,anno_mese=str):
         """
-        
-
         Parameters
-        
         ----------
         dati_taxi : dataFrame da filtrare
         indcol : string, indice della colonna con le date
@@ -110,4 +107,3 @@ class analisi_dati():
         """
         
         pass 
-
