@@ -43,6 +43,11 @@ if __name__=='__main__':
     response = requests.get(URL)
     percorsoFile = path + file
     open(percorsoFile, "wb").write(response.content)
+    fileCsv = ("taxi+_zone_lookup.csv")
+    URLCsv = ("https://d37ci6vzurychx.cloudfront.net/misc/")+fileCsv
+    response = requests.get(URLCsv)
+    percorsoFileCsv = path+fileCsv
+    open(percorsoFileCsv, "wb").write(response.content)
     isFile = os.path.isfile(percorsoFile)
     if isFile == True:
         dati_taxi=leggi_file.leggi_file_parquet(percorsoFile)
@@ -52,7 +57,7 @@ if __name__=='__main__':
         #columns= (input('scrivere i gli indici delle colonne di interesse separate da uno spazio: '))
         #columns=columns.split(' ')
         #imposto e selezione le colonne del file che volgio analizzare
-        zone_id=leggi_file.leggi_file_csv('./inputfile/taxi+_zone_lookup.csv')
+        zone_id=leggi_file.leggi_file_csv('./inputFile/taxi+_zone_lookup.csv')
         borough_id=analisi_dati.borough_id_finder(zone_id['Borough'])
         
         columns =  ["tpep_pickup_datetime", "tpep_dropoff_datetime", "PULocationID", "DOLocationID"]
