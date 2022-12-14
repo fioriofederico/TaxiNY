@@ -52,7 +52,7 @@ if __name__=='__main__':
     if isFile == True:
         dati_taxi=leggi_file.leggi_file_parquet(percorsoFile)
         
-        dati_taxi=analisi_dati.filtra_mese_corretto(dati_taxi,'tpep_pickup_datetime','2022-01')
+        dati_taxi=analisi_dati.filtra_mese_corretto(dati_taxi,'tpep_pickup_datetime',meseDaLeggere)
         #prendo da prompt le colonne d'interesse separate da uno spazio
         #columns= (input('scrivere i gli indici delle colonne di interesse separate da uno spazio: '))
         #columns=columns.split(' ')
