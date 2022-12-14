@@ -9,6 +9,7 @@ from lettura_file import leggi_file
 from analisi_dati import analisi_dati
 import os
 import time
+import requests
 
 def coverti_location_id(X,m=dict):
     """
@@ -30,9 +31,18 @@ def converti_solo_data(X):
     return data[0]
     
 if __name__=='__main__':
+    path = ("./inputFile/")
+    extensionFile = (".parquet")
+    typeData = ("yellow_tripdata_")
     #percorsoFile = input("dammi il percoso del file da leggere: ")
     meseDaLeggere = input("che mese si vuole analizzare: ")
-    percorsoFile = ("./inputFile/yellow_tripdata_")+meseDaLeggere+(".parquet")
+    if os.path.isdir(path) == False:
+        os.makedirs(path)
+    file=typeData+meseDaLeggere+extensionFile
+    URL = ("https://d37ci6vzurychx.cloudfront.net/trip-data/")+file
+    response = requests.get(URL)
+    percorsoFile = path + file
+    open(percorsoFile, "wb").write(response.content)
     isFile = os.path.isfile(percorsoFile)
     if isFile == True:
         dati_taxi=leggi_file.leggi_file_parquet(percorsoFile)
