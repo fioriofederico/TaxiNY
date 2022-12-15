@@ -39,10 +39,10 @@ if __name__=='__main__':
     if os.path.isdir(path) == False:
         os.makedirs(path)
     file=typeData+meseDaLeggere+extensionFile
-    if os.path.isfile(path+file) == False:
+    percorsoFile = path + file
+    if os.path.isfile(percorsoFile) == False:
         URL = ("https://d37ci6vzurychx.cloudfront.net/trip-data/")+file
         response = requests.get(URL)
-        percorsoFile = path + file
         open(percorsoFile, "wb").write(response.content)
     fileCsv = ("taxi+_zone_lookup.csv")
     if os.path.isfile(path+fileCsv) == False:
@@ -70,3 +70,4 @@ if __name__=='__main__':
                                                                                               m=borough_id)
     dati_filtrati_jenuary["data_pickup"] = dati_filtrati_jenuary['tpep_pickup_datetime'].apply(converti_solo_data)
     numero_corse_giornaliere = analisi_dati.numero_viaggi_al_giorno(dati_filtrati_jenuary["data_pickup"])
+    media_corse_gionaliere=analisi_dati.media_viaggi_al_mese(numero_corse_giornaliere)

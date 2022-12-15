@@ -99,7 +99,7 @@ class analisi_dati():
         return borough_id
     
     
-    def numero_viaggi_al_mese():
+    def media_viaggi_al_mese(numero_corse_giornaliere):
         
         """
         Prende in ingresso:
@@ -122,5 +122,10 @@ class analisi_dati():
           è la media di viaggi effettuati in un determinato giorno rispetto al mese considerato
              
         """
-        
-        pass 
+        numero_corse_mese=0
+        for i in numero_corse_giornaliere.keys():
+            numero_corse_mese+=numero_corse_giornaliere[i]
+        medie_corse_gionaliere={}
+        for i in numero_corse_giornaliere.keys():
+            medie_corse_gionaliere[i]=numero_corse_giornaliere[i]/numero_corse_mese
+        return medie_corse_gionaliere
