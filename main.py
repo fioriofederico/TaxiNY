@@ -10,6 +10,7 @@ from analisi_dati import analisi_dati
 import os
 import time
 import requests
+import pandas as pd
 
 def coverti_location_id(X,m=dict):
     """
@@ -35,39 +36,42 @@ if __name__=='__main__':
     extensionFile = (".parquet")
     typeData = ("yellow_tripdata_")
     #percorsoFile = input("dammi il percoso del file da leggere: ")
-    meseDaLeggere = input("che mese si vuole analizzare: ")
-    if os.path.isdir(path) == False:
-        os.makedirs(path)
-    file=typeData+meseDaLeggere+extensionFile
-    percorsoFile = path + file
-    if os.path.isfile(percorsoFile) == False:
-        URL = ("https://d37ci6vzurychx.cloudfront.net/trip-data/")+file
-        response = requests.get(URL)
-        open(percorsoFile, "wb").write(response.content)
-    fileCsv = ("taxi+_zone_lookup.csv")
-    if os.path.isfile(path+fileCsv) == False:
-        URLCsv = ("https://d37ci6vzurychx.cloudfront.net/misc/")+fileCsv
-        response = requests.get(URLCsv)
-        percorsoFileCsv = path+fileCsv
-        open(percorsoFileCsv, "wb").write(response.content)
-
-    dati_taxi = leggi_file.leggi_file_parquet(percorsoFile)
-    dati_taxi = analisi_dati.filtra_mese_corretto(dati_taxi, 'tpep_pickup_datetime', meseDaLeggere)
-    # prendo da prompt le colonne d'interesse separate da uno spazio
-    # columns= (input('scrivere i gli indici delle colonne di interesse separate da uno spazio: '))
-    # columns=columns.split(' ')
-    # imposto e selezione le colonne del file che volgio analizzare
-    zone_id = leggi_file.leggi_file_csv('./inputFile/taxi+_zone_lookup.csv')
-    borough_id = analisi_dati.borough_id_finder(zone_id['Borough'])
-
-    columns = ["tpep_pickup_datetime", "tpep_dropoff_datetime", "PULocationID", "DOLocationID"]
-    # richiama il metodo che filtra il dataframe
-    dati_filtrati_jenuary = analisi_dati.filtra_dataFrame(dati_taxi, columns)
-
-    # aggiungo un series al dataframe in cui le data delle partenze vengono sostituite da timestamp
-    # dati_filtrati_jenuary["ts_pickup"]=dati_filtrati_jenuary['tpep_pickup_datetime'].apply(converti_timestamp)
-    dati_filtrati_jenuary['Pickup_Borough'] = dati_filtrati_jenuary["PULocationID"].apply(coverti_location_id,
-                                                                                              m=borough_id)
-    dati_filtrati_jenuary["data_pickup"] = dati_filtrati_jenuary['tpep_pickup_datetime'].apply(converti_solo_data)
-    numero_corse_giornaliere = analisi_dati.numero_viaggi_al_giorno(dati_filtrati_jenuary["data_pickup"])
-    media_corse_gionaliere=analisi_dati.media_viaggi_al_mese(numero_corse_giornaliere)
+    meseDaLeggere =input("che mese si vuole analizzare: ")
+    meseDaLeggere=meseDaLeggere.split(' ')
+    dati_filtrati= pd.DataFrame()
+    for mese_analizzato in range(len(meseDaLeggere)):
+        if os.path.isdir(path) == False:
+            os.makedirs(path)
+        file=typeData+meseDaLeggere[mese_analizzato]+extensionFile
+        percorsoFile = path + file
+        if os.path.isfile(percorsoFile) == False:
+            URL = ("https://d37ci6vzurychx.cloudfront.net/trip-data/")+file
+            response = requests.get(URL)
+            open(percorsoFile, "wb").write(response.content)
+        fileCsv = ("taxi+_zone_lookup.csv")
+        if os.path.isfile(path+fileCsv) == False:
+            URLCsv = ("https://d37ci6vzurychx.cloudfront.net/misc/")+fileCsv
+            response = requests.get(URLCsv)
+            percorsoFileCsv = path+fileCsv
+            open(percorsoFileCsv, "wb").write(response.content)
+    
+        dati_taxi = leggi_file.leggi_file_parquet(percorsoFile)
+        dati_taxi = analisi_dati.filtra_mese_corretto(dati_taxi, 'tpep_pickup_datetime', meseDaLeggere[mese_analizzato])
+        # prendo da prompt le colonne d'interesse separate da uno spazio
+        # columns= (input('scrivere i gli indici delle colonne di interesse separate da uno spazio: '))
+        # columns=columns.split(' ')
+        # imposto e selezione le colonne del file che volgio analizzare
+        zone_id = leggi_file.leggi_file_csv('./inputFile/taxi+_zone_lookup.csv')
+        borough_id = analisi_dati.borough_id_finder(zone_id['Borough'])
+    
+        columns = ["tpep_pickup_datetime", "tpep_dropoff_datetime", "PULocationID", "DOLocationID"]
+        # richiama il metodo che filtra il dataframe
+        for i in range(len(columns)):
+            dati_filtrati[f'{columns[i]}_{meseDaLeggere[mese_analizzato]}']= analisi_dati.filtra_dataFrame(dati_taxi, columns[i])
+    
+        # aggiungo un series al dataframe in cui le data delle partenze vengono sostituite da timestamp
+        # dati_filtrati_jenuary["ts_pickup"]=dati_filtrati_jenuary['tpep_pickup_datetime'].apply(converti_timestamp)
+        dati_filtrati[f'Pickup_Borough_{meseDaLeggere[mese_analizzato]}'] = dati_filtrati[f"PULocationID_{meseDaLeggere[mese_analizzato]}"].apply(coverti_location_id,m=borough_id)
+        dati_filtrati[f"data_pickup_{meseDaLeggere[mese_analizzato]}"] = dati_filtrati[f'tpep_pickup_datetime_{meseDaLeggere[mese_analizzato]}'].apply(converti_solo_data)
+        numero_corse_giornaliere = analisi_dati.numero_viaggi_al_giorno(dati_filtrati[f"data_pickup_{meseDaLeggere[mese_analizzato]}"])
+        media_corse_gionaliere=analisi_dati.media_viaggi_al_mese(numero_corse_giornaliere)
