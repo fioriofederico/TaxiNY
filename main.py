@@ -43,6 +43,7 @@ if __name__=='__main__':
     
     numero_corse_giornaliere={}
     dict_numero_corse_giornaliere={}
+    dict_media_corse_giornaliere={}
     for mese_analizzato in range(len(meseDaLeggere)): #scorro la lista dei mesi 
     #scarico i file
         if os.path.isdir(path) == False: 
@@ -80,11 +81,17 @@ if __name__=='__main__':
         dati_filtrati[f'Pickup_Borough_{meseDaLeggere[mese_analizzato]}'] = dati_filtrati[f"PULocationID_{meseDaLeggere[mese_analizzato]}"].apply(coverti_location_id,m=borough_id)
         dati_filtrati[f"data_pickup_{meseDaLeggere[mese_analizzato]}"] = dati_filtrati[f'tpep_pickup_datetime_{meseDaLeggere[mese_analizzato]}'].apply(converti_solo_data)
         
-        
         #Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
         #la data del mese, e come valore il numero di corse in quella data
         numero_corse_giornaliere = analisi_dati.numero_viaggi_al_giorno(dati_filtrati[f"data_pickup_{meseDaLeggere[mese_analizzato]}"])
         dict_numero_corse_giornaliere[f'{meseDaLeggere[mese_analizzato]}']=numero_corse_giornaliere
+        
+        #Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
+        #la data del mese, e come valore la media aritmetica delle corse giornaliere sulle corse dell'intero mese
+        media_corse_gionaliere= analisi_dati.media_viaggi_al_mese(numero_corse_giornaliere)
+        dict_media_corse_giornaliere[f'{meseDaLeggere[mese_analizzato]}']=media_corse_gionaliere
+        
+        
         
         
         
