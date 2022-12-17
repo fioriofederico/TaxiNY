@@ -46,6 +46,7 @@ if __name__=='__main__':
     dict_numero_corse_giornaliere={}
     dict_media_corse_giornaliere={}
     dict_numero_corse_per_borough={}
+    dict_media_corse_per_borough={}
     for mese_analizzato in range(len(meseDaLeggere)): #scorro la lista dei mesi 
     #scarico i file
         if os.path.isdir(path) == False: 
@@ -98,6 +99,10 @@ if __name__=='__main__':
         #valore: tutte le medie associate 
         numero_corse_per_borough = analisi_dati.conta_occorrenze(dati_filtrati[f"Pickup_Borough_{meseDaLeggere[mese_analizzato]}"])
         dict_numero_corse_per_borough[f'Corse_borough_{meseDaLeggere[mese_analizzato]}']=numero_corse_per_borough
+        
+        #Calcolo dizionario con numero di corse medie per borough 
+        media_corse_per_borough = analisi_dati.media_viaggi_al_mese(numero_corse_per_borough)
+        dict_media_corse_per_borough[f'Media_corse_borough_{meseDaLeggere[mese_analizzato]}']=media_corse_per_borough
         
         
     
