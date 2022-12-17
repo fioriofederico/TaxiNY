@@ -5,9 +5,10 @@ In quale periodo dell'anno i taxi vengono utilizzati di più? Creare un file di 
  A causa delle differenze tra le zone di New York, vogliamo visualizzare le stesse 
  informazioni per ogni borough. Notate qualche differenza tra di loro? Qual è il mese con la media giornaliera
  più alta? E invece quello con la media giornaliera più bassa?
+ 
  """
-from lettura_file import leggi_file
-from analisi_dati import analisi_dati
+from lettura_file import Leggi_file
+from analisi_dati import Analisi_dati
 import os
 import time
 import requests
@@ -63,21 +64,23 @@ if __name__=='__main__':
             response = requests.get(URLCsv)
             percorsoFileCsv = path+fileCsv
             open(percorsoFileCsv, "wb").write(response.content) 
-            
-    
-        dati_taxi = leggi_file.leggi_file_parquet(percorsoFile)
-        dati_taxi = analisi_dati.filtra_mese_corretto(dati_taxi, 'tpep_pickup_datetime', meseDaLeggere[mese_analizzato])
+        
+        lf1=Leggi_file(percorsoFile)
+        lf2=Leggi_file(path+fileCsv)
+        ad=Analisi_dati()
+        dati_taxi = lf1.leggi_file_parquet()
+        dati_taxi = ad.filtra_mese_corretto(dati_taxi, 'tpep_pickup_datetime', meseDaLeggere[mese_analizzato])
         # prendo da prompt le colonne d'interesse separate da uno spazio
         # columns= (input('scrivere i gli indici delle colonne di interesse separate da uno spazio: '))
         # columns=columns.split(' ')
         # imposto e selezione le colonne del file che volgio analizzare
-        zone_id = leggi_file.leggi_file_csv('./inputFile/taxi+_zone_lookup.csv') #lettura csv: restituisce un dataFrame con gli id delle zone
-        borough_id = analisi_dati.borough_id_finder(zone_id['Borough']) #dizionario che associa id e borough
+        zone_id = lf2.leggi_file_csv() #lettura csv: restituisce un dataFrame con gli id delle zone
+        borough_id = ad.borough_id_finder(zone_id['Borough']) #dizionario che associa id e borough
     
         columns = ["tpep_pickup_datetime", "tpep_dropoff_datetime", "PULocationID", "DOLocationID"] 
         # richiama il metodo che filtra il dataframe
         for i in range(len(columns)):
-            dati_filtrati[f'{columns[i]}_{meseDaLeggere[mese_analizzato]}']= analisi_dati.filtra_dataFrame(dati_taxi, columns[i])
+            dati_filtrati[f'{columns[i]}_{meseDaLeggere[mese_analizzato]}']= ad.filtra_dataFrame(dati_taxi, columns[i])
     
         # aggiungo un series al dataframe in cui le data delle partenze vengono sostituite da timestamp
         # dati_filtrati_jenuary["ts_pickup"]=dati_filtrati_jenuary['tpep_pickup_datetime'].apply(converti_timestamp)
@@ -86,22 +89,22 @@ if __name__=='__main__':
         
         #Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
         #la data del mese, e come valore il numero di corse in quella data
-        numero_corse_giornaliere = analisi_dati.conta_occorrenze(dati_filtrati[f"data_pickup_{meseDaLeggere[mese_analizzato]}"])
+        numero_corse_giornaliere = ad.conta_occorrenze(dati_filtrati[f"data_pickup_{meseDaLeggere[mese_analizzato]}"])
         dict_numero_corse_giornaliere[f'{meseDaLeggere[mese_analizzato]}']=numero_corse_giornaliere
         
         #Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
         #la data del mese, e come valore la media aritmetica delle corse giornaliere sulle corse dell'intero mese
-        media_corse_gionaliere= analisi_dati.media_viaggi_al_mese(numero_corse_giornaliere)
+        media_corse_gionaliere= ad.media_viaggi_al_mese(numero_corse_giornaliere)
         dict_media_corse_giornaliere[f'{meseDaLeggere[mese_analizzato]}']=media_corse_gionaliere
         
         #Dizionario con numero di corse giornaliere per ogni borough.
         #Chiave: borough 
         #valore: tutte le medie associate 
-        numero_corse_per_borough = analisi_dati.conta_occorrenze(dati_filtrati[f"Pickup_Borough_{meseDaLeggere[mese_analizzato]}"])
+        numero_corse_per_borough = ad.conta_occorrenze(dati_filtrati[f"Pickup_Borough_{meseDaLeggere[mese_analizzato]}"])
         dict_numero_corse_per_borough[f'Corse_borough_{meseDaLeggere[mese_analizzato]}']=numero_corse_per_borough
         
         #Calcolo dizionario con numero di corse medie per borough 
-        media_corse_per_borough = analisi_dati.media_viaggi_al_mese(numero_corse_per_borough)
+        media_corse_per_borough = ad.media_viaggi_al_mese(numero_corse_per_borough)
         dict_media_corse_per_borough[f'Media_corse_borough_{meseDaLeggere[mese_analizzato]}']=media_corse_per_borough
         
         

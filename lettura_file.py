@@ -9,12 +9,12 @@ In quale periodo dell'anno i taxi vengono utilizzati di più? Creare un file di 
 
 import pandas as pd 
 
-class leggi_file():
+class Leggi_file:
     """
     lettura di un file generico
     """
     
-    def __init__(self, percorsoFile=str):
+    def __init__(self, percorsoFile:str):
         
         """
         Costruttore
@@ -22,44 +22,44 @@ class leggi_file():
         
         self.percorsoFile = percorsoFile
         
-    def leggi_file_parquet(percorsoFile):
+    def leggi_file_parquet(self):
         
         """
         Lettura dei file in formato .parquet
         """
         try:
-            dati_taxi=pd.read_parquet(percorsoFile, engine='pyarrow')
+            dati_taxi=pd.read_parquet(self.percorsoFile, engine='pyarrow')
             return dati_taxi
         except:
             print("il file non è in formato .parquet")
     
-    def leggi_file_csv(percorsoFile):
+    def leggi_file_csv(self):
         """
         Lettura dei file in formato .csv
         """
         try:
-            dati_taxi = pd.read_csv(percorsoFile)
+            dati_taxi = pd.read_csv(self.percorsoFile)
             return dati_taxi
         except:
             print("il file non è in formato csv")
 
     
-    def leggi_file_json(percorsoFile):
+    def leggi_file_json(self):
         """
         Lettura dei file in formato .json
         """
         try:
-            dati_taxi= pd.read_json(percorsoFile)
+            dati_taxi= pd.read_json(self.percorsoFile)
             return dati_taxi
         except:
             print("il file non è in formato json")
             
-    def leggi_file_txt(percorsoFile):
+    def leggi_file_txt(self):
         """
         Lettura dei file in formato .txt
         Il carattere ";" viene utilizzato come separatore dei dati 
         """
-        dati_taxi= pd.read_csv(percorsoFile, sep= ";")
+        dati_taxi= pd.read_csv(self.percorsoFile, sep= ";")
         return dati_taxi
 
 

@@ -7,7 +7,7 @@ Created on Sat Dec 10 15:50:13 2022
 
 import pandas as pd
 
-class analisi_dati():
+class Analisi_dati():
     """
     Calcolo numero medio di viaggi al giorno su ogni mese (verso ogni destinazione):
         numero totale dei viaggi ogni giorno diviso il numero dei viaggi totali del mese
@@ -21,11 +21,7 @@ class analisi_dati():
         
     """
     
-    def __init__(self):
-        """
-        Costruttore
-        """
-    def filtra_mese_corretto(dati_taxi,indcol=str,anno_mese=str):
+    def filtra_mese_corretto(self,dati_taxi,indcol=str,anno_mese=str):
         """
         Parameters
         ----------
@@ -50,29 +46,22 @@ class analisi_dati():
         
         
         
-    def filtra_dataFrame(dati_taxi,columns=list):
+    def filtra_dataFrame(self,dati_taxi,columns=list):
         dati_filtrati=dati_taxi[columns]
         return dati_filtrati
+
     
-        
-          
-        
-        
-    def conversione_dati():
+    def conta_occorrenze(self,series):
         """
-        Restituisco colonna delle date del dataFrame codificata in timestamp
         
-        """
-        pass 
-    
-    def numero_viaggi_al_giorno(series):
-        """
-        Prende in ingresso i dati codificati da conversione_dati() e il giorno che voglio considerare
-        Calcolo la somma del numero di viaggi effettuati nel giorno che viene richiesto nel main
+        Prende in ingresso una series (date delle partenze)
+        Lo uso per calcolare: 
+            numero_viaggi_al giorno
+            numero_viaggi_per_borough
         
         
-        Returns: numeroViaggi 
-              somma del numero di viaggi al giorno (per il giorno considerato) 
+        Returns: 
+            numero_corse_giornaliere
         """
         numero_corse_giornaliere={}
         for b in series:
@@ -81,51 +70,56 @@ class analisi_dati():
             else:
                 numero_corse_giornaliere[str(b)]=1
         return numero_corse_giornaliere
-    def borough_id_finder(series):
-        """
-        Prende in ingresso i dati codificati da conversione_dati() e il giorno che voglio considerare
-        Calcolo la somma del numero di viaggi effettuati nel giorno che viene richiesto nel main
+    
+    
+    def borough_id_finder(self,series):
         
-        
-        Returns: numeroViaggi 
-              somma del numero di viaggi al giorno (per il giorno considerato) 
         """
+        Prende in ingresso la series con i borough
+        
+        Returns: dizionario che ha come chiave i borough e come valore le liste degli id delle zone associate al borough 
+              
+        """
+        #mi salvo gli indici che compaiono in ogni borough in un dizionario
         borough_id={}
-        for a,b in series.items():
+        for a,b in series.items(): #items mi restituisce ogni volta una tupla: a scorre gli indici e b il valore del borough della series
             if str(b) in borough_id.keys():
-                borough_id[str(b)].append(a+1)
+                borough_id[str(b)].append(a+1) #a+1 perchè l'indice è scalato di 1 rispeto alla locationID
             else:
                 borough_id[str(b)]=[a+1]
         return borough_id
     
     
-    def media_viaggi_al_mese(numero_corse_giornaliere):
+    def media_viaggi_al_mese(self,numero_corse_giornaliere):
         
         """
         Prende in ingresso:
             
-            numeroViaggi
-            mese 
-             (mese su cui voglio calcolare la media )
-             
-        Calcolo:
+            numero corse giornaliere 
             
-        numGiorniMese
-            = la somma del numero di giorni totali presenti nel mese (N.B. sono diversi in base al mese considerato, 
-                                                                      possiamo fare un dizionario che contiene il numero 
-                                                                      di giorni per ogni mese?)
-        media = numeroViaggi / numGiorniMese
         
         Returns:
         --------
-        media
-          è la media di viaggi effettuati in un determinato giorno rispetto al mese considerato
+        dizionario: media corse giornaliere
+          è la media di viaggi effettuati in un determinato giorno rispetto ai viaggi del mese considerato 
              
         """
+        
+        #Sommo il numero di corse giornaliere
         numero_corse_mese=0
         for i in numero_corse_giornaliere.keys():
-            numero_corse_mese+=numero_corse_giornaliere[i]
+                numero_corse_mese+=numero_corse_giornaliere[i]
+        
+        #mi restituisce la media delle corse giornaliere per un unico mese 
         medie_corse_gionaliere={}
         for i in numero_corse_giornaliere.keys():
-            medie_corse_gionaliere[i]=numero_corse_giornaliere[i]/numero_corse_mese
+            medie_corse_gionaliere[i]=numero_corse_giornaliere[i]/numero_corse_mese #mi restituisce la media su ogni giorno del mese
         return medie_corse_gionaliere
+        
+    
+    
+    
+    
+    
+    
+    
