@@ -3,7 +3,8 @@
 In quale periodo dell'anno i taxi vengono utilizzati di più? Creare un file di risultati e
  un grafico che, per ogni mese, indichi il numero medio di viaggi registrati ogni giorno. 
  A causa delle differenze tra le zone di New York, vogliamo visualizzare le stesse 
- informazioni per ogni borough. Notate qualche differenza tra di loro? Qual è il mese 
+ informazioni per ogni borough. Notate qualche differenza tra di loro? Qual è il mese con la media giornaliera
+ più alta? E invece quello con la media giornaliera più bassa?
  """
 from lettura_file import leggi_file
 from analisi_dati import analisi_dati
@@ -44,6 +45,7 @@ if __name__=='__main__':
     numero_corse_giornaliere={}
     dict_numero_corse_giornaliere={}
     dict_media_corse_giornaliere={}
+    dict_numero_corse_per_borough={}
     for mese_analizzato in range(len(meseDaLeggere)): #scorro la lista dei mesi 
     #scarico i file
         if os.path.isdir(path) == False: 
@@ -83,7 +85,7 @@ if __name__=='__main__':
         
         #Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
         #la data del mese, e come valore il numero di corse in quella data
-        numero_corse_giornaliere = analisi_dati.numero_viaggi_al_giorno(dati_filtrati[f"data_pickup_{meseDaLeggere[mese_analizzato]}"])
+        numero_corse_giornaliere = analisi_dati.conta_occorrenze(dati_filtrati[f"data_pickup_{meseDaLeggere[mese_analizzato]}"])
         dict_numero_corse_giornaliere[f'{meseDaLeggere[mese_analizzato]}']=numero_corse_giornaliere
         
         #Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
@@ -91,11 +93,14 @@ if __name__=='__main__':
         media_corse_gionaliere= analisi_dati.media_viaggi_al_mese(numero_corse_giornaliere)
         dict_media_corse_giornaliere[f'{meseDaLeggere[mese_analizzato]}']=media_corse_gionaliere
         
+        #Dizionario con numero di corse giornaliere per ogni borough.
+        #Chiave: borough 
+        #valore: tutte le medie associate 
+        numero_corse_per_borough = analisi_dati.conta_occorrenze(dati_filtrati[f"Pickup_Borough_{meseDaLeggere[mese_analizzato]}"])
+        dict_numero_corse_per_borough[f'Corse_borough_{meseDaLeggere[mese_analizzato]}']=numero_corse_per_borough
         
         
-        
-        
-        
+    
         
       
         
