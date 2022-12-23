@@ -21,22 +21,29 @@ class Analisi_dati():
         
     """
     
-    def filtra_mese_corretto(self,dati_taxi,indcol=str,anno_mese=str):
+    def filtra_mese_corretto(self,dati_taxi,indcol:str,anno_mese:str):
         """
         Parameters
         ----------
         dati_taxi : dataFrame da filtrare
         indcol : string, indice della colonna con le date
         anno_mese : string, anno e mese di interese nel formato: YYYY-MM
+        (Passiamo anno-mese per eliminare le date scorrette presenti nel dataFrame)
         Returns
         -------
         dati_taxi : TYPE
             DESCRIPTION.
 
         """
+        #mesi sbagliati contiene gli indici delle date sbagliate del dataframe
         mesi_sbagliati=[]
+        #a indice, b valore all'interno della colonna. Il ciclo scorre la colonna di cui specifichiamo l'indice
+        #(noi consideriamo sempre quello delle partenze)
         for (a,b) in dati_taxi[indcol].items():
+            #trasformo in stringa perchè i valori nel dataFrame sono di tipo dataType e i valori risultano poco comparabili
             b=str(b)
+            #la stringa delle partenze contiene sia data che ora. A noi serve solo la data, quindi faccio lo slice: 
+                #prendo solo i primi 7 termini della stringa
             b=b[:7]
             if b != anno_mese:
                 mesi_sbagliati.append(a)
@@ -90,7 +97,16 @@ class Analisi_dati():
         return borough_id
     
     
-    def media_viaggi_al_mese(self,numero_corse_giornaliere):
+    def media_viaggi_mese(self,numero_corse_giornaliere):
+        #Sommo il numero di corse giornaliere
+        numero_corse_mese=0
+        numero_giorni_mese=len(numero_corse_giornaliere.keys())
+        numero_corse_mese = sum(numero_corse_giornaliere.values())
+        media=numero_corse_mese/numero_giorni_mese
+        return media
+                
+                
+    def percentuale_viaggi_al_mese(self,numero_corse_giornaliere, numero_corse_mese):
         
         """
         Prende in ingresso:
@@ -105,16 +121,11 @@ class Analisi_dati():
              
         """
         
-        #Sommo il numero di corse giornaliere
-        numero_corse_mese=0
-        for i in numero_corse_giornaliere.keys():
-                numero_corse_mese+=numero_corse_giornaliere[i]
-        
         #mi restituisce la media delle corse giornaliere per un unico mese 
-        medie_corse_gionaliere={}
+        percentuale_corse_gionaliere={}
         for i in numero_corse_giornaliere.keys():
-            medie_corse_gionaliere[i]=numero_corse_giornaliere[i]/numero_corse_mese #mi restituisce la media su ogni giorno del mese
-        return medie_corse_gionaliere
+            percentuale_corse_gionaliere[i]=numero_corse_giornaliere[i]/numero_corse_mese #mi restituisce la media su ogni giorno del mese
+        return percentuale_corse_gionaliere
         
     
     

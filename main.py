@@ -13,6 +13,7 @@ import os
 import time
 import requests
 import pandas as pd
+import matplotlib.pyplot as plt
 
 def coverti_location_id(X,m=dict):
     """
@@ -41,13 +42,16 @@ if __name__=='__main__':
     #assegno una lista al mese da leggere 
     meseDaLeggere =input(" Quali mesi vuoi analizzare? (formato input: anno-mese, diviso da spazi): ") 
     meseDaLeggere=meseDaLeggere.split(' ') #split mi restituisce una lista di stringhe, cioè la lista di mesi che do in input
-    dati_filtrati= pd.DataFrame() #inizializzo dataFrame vuoto dei risultati 
+   # dati_filtrati= pd.DataFrame() #inizializzo dataFrame vuoto dei risultati 
     
     numero_corse_giornaliere={}
+    dict_media_corse_mese={}
     dict_numero_corse_giornaliere={}
     dict_media_corse_giornaliere={}
     dict_numero_corse_per_borough={}
     dict_media_corse_per_borough={}
+    dict_percentuale_corse_giornaliere={}
+    dict_percentuale_corse_per_borough={}
     for mese_analizzato in range(len(meseDaLeggere)): #scorro la lista dei mesi 
     #scarico i file
         if os.path.isdir(path) == False: 
@@ -68,6 +72,7 @@ if __name__=='__main__':
         lf1=Leggi_file(percorsoFile)
         lf2=Leggi_file(path+fileCsv)
         ad=Analisi_dati()
+        dati_filtrati= pd.DataFrame()
         dati_taxi = lf1.leggi_file_parquet()
         dati_taxi = ad.filtra_mese_corretto(dati_taxi, 'tpep_pickup_datetime', meseDaLeggere[mese_analizzato])
         # prendo da prompt le colonne d'interesse separate da uno spazio
@@ -92,10 +97,14 @@ if __name__=='__main__':
         numero_corse_giornaliere = ad.conta_occorrenze(dati_filtrati[f"data_pickup_{meseDaLeggere[mese_analizzato]}"])
         dict_numero_corse_giornaliere[f'{meseDaLeggere[mese_analizzato]}']=numero_corse_giornaliere
         
-        #Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
+        media_corse_mese=ad.media_viaggi_mese(numero_corse_giornaliere)
+        dict_media_corse_mese[f'{meseDaLeggere[mese_analizzato]}']= media_corse_mese
+        
+        
+        """#Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
         #la data del mese, e come valore la media aritmetica delle corse giornaliere sulle corse dell'intero mese
-        media_corse_gionaliere= ad.media_viaggi_al_mese(numero_corse_giornaliere)
-        dict_media_corse_giornaliere[f'{meseDaLeggere[mese_analizzato]}']=media_corse_gionaliere
+        percentuale_corse_gionaliere= ad.percentuale_viaggi_al_mese(numero_corse_giornaliere,numero_corse_mese)
+        dict_percentuale_corse_giornaliere[f'{meseDaLeggere[mese_analizzato]}']= percentuale_corse_gionaliere
         
         #Dizionario con numero di corse giornaliere per ogni borough.
         #Chiave: borough 
@@ -104,8 +113,9 @@ if __name__=='__main__':
         dict_numero_corse_per_borough[f'Corse_borough_{meseDaLeggere[mese_analizzato]}']=numero_corse_per_borough
         
         #Calcolo dizionario con numero di corse medie per borough 
-        media_corse_per_borough = ad.media_viaggi_al_mese(numero_corse_per_borough)
-        dict_media_corse_per_borough[f'Media_corse_borough_{meseDaLeggere[mese_analizzato]}']=media_corse_per_borough
+        percentuale_corse_per_borough = ad.percentuale_viaggi_al_mese(numero_corse_per_borough, numero_corse_mese)
+        dict_percentuale_corse_per_borough[f'Media_corse_borough_{meseDaLeggere[mese_analizzato]}']=percentuale_corse_per_borough
+        """
         
         
     
