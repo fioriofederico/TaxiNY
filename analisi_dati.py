@@ -100,9 +100,10 @@ class Analisi_dati():
     def media_viaggi_mese(self,numero_corse_giornaliere):
         #Sommo il numero di corse giornaliere
         numero_corse_mese=0
+        media=[]
         numero_giorni_mese=len(numero_corse_giornaliere.keys())
         numero_corse_mese = sum(numero_corse_giornaliere.values())
-        media=numero_corse_mese/numero_giorni_mese
+        media.append(numero_corse_mese/numero_giorni_mese)
         return media
                 
                 
