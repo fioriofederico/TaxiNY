@@ -9,20 +9,20 @@ import pandas as pd
 import matplotlib.pyplot as plt 
 
 class Analisi_dati():
+    
     """
-    Calcolo numero medio di viaggi al giorno su ogni mese (verso ogni destinazione):
-        numero totale dei viaggi ogni giorno diviso il numero dei viaggi totali del mese
-        
-        Considero la colonna che indica le date
-        attraverso timestamp codifico le date in secondi
-        ad esempio: 2022-01-01 in 00:00:00 corrisponde a 1640991600
-        2022-02-01 in 00:00:00 corrisponde a 1643670000
-        Quindi il mese di gennaio corrisponderà a tutti i valori compresi fra i due valori timestamp
+     Analisi del file csv: calcolo del numero medio di viaggi al giorno rispetto all'intero mese
+     Analizziamo la colonna relativa alle partenze dei taxi
+
+    Returns
+    -------
+    None.
             
         
-    """
+    """         
     
-    def filtra_mese_corretto(self,dati_taxi, indcol:str, anno_mese:str):
+    def filtra_mese_corretto(self, dati_taxi, indcol:str, anno_mese:str):
+        
         """
         Parameters
         ----------
@@ -30,21 +30,20 @@ class Analisi_dati():
         indcol : string, indice della colonna con le date
         anno_mese : string, anno e mese di interese nel formato: YYYY-MM
         (Passiamo anno-mese per eliminare le date scorrette presenti nel dataFrame)
+        
         Returns
         -------
-        dati_taxi : TYPE
-            DESCRIPTION.
+        TYPE dati_taxi
+            dataframe corretto (non contiene date errate e valori NaN)
 
         """
         #mesi sbagliati contiene gli indici delle date sbagliate del dataframe
         mesi_sbagliati=[]
-        #a indice, b valore all'interno della colonna. Il ciclo scorre la colonna di cui specifichiamo l'indice
-        #(noi consideriamo sempre quello delle partenze)
+        #a indice della colonna che vogliamo scorrere (colonna delle partenze); b valore all'interno della colonna. 
         for (a,b) in dati_taxi[indcol].items():
             #trasformo in stringa perchè i valori nel dataFrame sono di tipo dataType e i valori risultano poco comparabili
             b=str(b)
-            #la stringa delle partenze contiene sia data che ora. A noi serve solo la data, quindi faccio lo slice: 
-                #prendo solo i primi 7 termini della stringa
+            #Prendiamo solo i primi 7 termini della stringa delle partenze (slice), perchè consideriamo solo la data 
             b=b[:7]
             if b != anno_mese:
                 mesi_sbagliati.append(a)
@@ -53,23 +52,31 @@ class Analisi_dati():
         return dati_taxi
         
         
-        
     def filtra_dataFrame(self,dati_taxi,columns=list):
+        """
+        Parameters
+        ----------
+        dati_taxi: dataframe corretto
+        columns:
+
+        Returns
+        -------
+        TYPE dati_filtrati
+        
+        """
         dati_filtrati=dati_taxi[columns]
         return dati_filtrati
 
     
     def conta_occorrenze(self,series):
         """
-        
-        Prende in ingresso una series (date delle partenze)
-        Lo uso per calcolare: 
-            numero_viaggi_al giorno
-            numero_viaggi_per_borough
-        
-        
+        Parameters
+        ----------
+        Series: series contenente le date delle partenze
+
         Returns: 
-            numero_corse_giornaliere
+            TYPE numero_corse_giornaliere
+                
         """
         numero_corse_giornaliere={}
         for b in series:
@@ -83,9 +90,13 @@ class Analisi_dati():
     def borough_id_finder(self,series):
         
         """
-        Prende in ingresso la series con i borough
+        Parameters
+        ----------
+        Series: series contenente i borough
         
-        Returns: dizionario che ha come chiave i borough e come valore le liste degli id delle zone associate al borough 
+        Returns: 
+            TYPE borough_id
+            dizionario che ha come chiave il borough, e come valore le liste degli id delle zone associate al borough 
               
         """
         #mi salvo gli indici che compaiono in ogni borough in un dizionario
@@ -99,24 +110,60 @@ class Analisi_dati():
     
     
     def media_viaggi_mese(self,numero_corse_giornaliere):
-        #Sommo il numero di corse giornaliere
+        """
+        Parameters
+        ----------
+        numero_corse_giornaliere: dizionario che contiene il numero di corse giornaliere per ogni mese
+
+        Returns
+        -------
+        TYPE media 
+             media del numero di corse al mese diviso il numero di giorni del mese
+        
+        """
         numero_corse_mese=0
-        media=float
         numero_giorni_mese=len(numero_corse_giornaliere.keys())
         numero_corse_mese = sum(numero_corse_giornaliere.values())
         media=numero_corse_mese/numero_giorni_mese
         return media
                
+    
     def mese_con_media_maggiore(self, dict_media_corse_mese):
+        """
+        Parameters
+        ----------
+        dict_media_corse_mese = dizionario che contiene le medie associate ad ogni mese
+
+        Returns
+        -------
+        TYPE  mese_con_media_maggiore
+             il mese che ha la media più alta
+        
+        """
         mese_con_media_maggiore=0
         mese_con_media_maggiore=max(dict_media_corse_mese, key=dict_media_corse_mese.get)
         print("Il mese con la media maggiore fra quelli analizzati è ", mese_con_media_maggiore)
         return mese_con_media_maggiore
     
+    
     def plot(self, media_corse_dF):
+        """
+        Parameters
+        ----------
+        media_corse_dF : dataframe contenente le medie associate ad ogni mese
+
+        Returns
+        -------
+        TYPE None
+            Istogramma che contiene sull'asse delle x i mesi e su quello delle y le medie associate
+        """
+       # plt.figure(figsize=(1, 90000))
         media_corse_dF.plot(x = 'Mese', y = 'Media', color = 'green', kind = 'bar')
         plt.title('Media corse al mese')
-        return plt.show()
+        plt.show()
+       # plt.savefig("output.jpg", bbox_inches='tight' )
+       # plt.close()
+        return 
         
         
     def percentuale_viaggi_al_mese(self,numero_corse_giornaliere, numero_corse_mese):
@@ -125,7 +172,6 @@ class Analisi_dati():
         Prende in ingresso:
             
             numero corse giornaliere 
-            
         
         Returns:
         --------

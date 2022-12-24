@@ -118,9 +118,6 @@ if __name__=='__main__':
     #Plot: istogramma
     plot = ad.plot(media_corse_dF)
     
-    #media_corse_dF.plot(x = 'Mese', y = 'Media', color = 'green', kind = 'bar')
-    #plt.title('Media corse al mese')
-    #plt.show()
     
         # #Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
         # #la data del mese, e come valore la media aritmetica delle corse giornaliere sulle corse dell'intero mese
