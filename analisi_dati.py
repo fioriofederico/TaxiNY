@@ -6,6 +6,7 @@ Created on Sat Dec 10 15:50:13 2022
 """
 
 import pandas as pd
+import matplotlib.pyplot as plt 
 
 class Analisi_dati():
     """
@@ -100,18 +101,24 @@ class Analisi_dati():
     def media_viaggi_mese(self,numero_corse_giornaliere):
         #Sommo il numero di corse giornaliere
         numero_corse_mese=0
-        media=[]
+        media=float
         numero_giorni_mese=len(numero_corse_giornaliere.keys())
         numero_corse_mese = sum(numero_corse_giornaliere.values())
-        media.append(numero_corse_mese/numero_giorni_mese)
+        media=numero_corse_mese/numero_giorni_mese
         return media
                
     def mese_con_media_maggiore(self, dict_media_corse_mese):
         mese_con_media_maggiore=0
         mese_con_media_maggiore=max(dict_media_corse_mese, key=dict_media_corse_mese.get)
-        print("Il mese con la media maggiore è ", mese_con_media_maggiore)
+        print("Il mese con la media maggiore fra quelli analizzati è ", mese_con_media_maggiore)
         return mese_con_media_maggiore
-                
+    
+    def plot(self, media_corse_dF):
+        media_corse_dF.plot(x = 'Mese', y = 'Media', color = 'green', kind = 'bar')
+        plt.title('Media corse al mese')
+        return plt.show()
+        
+        
     def percentuale_viaggi_al_mese(self,numero_corse_giornaliere, numero_corse_mese):
         
         """

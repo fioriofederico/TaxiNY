@@ -105,8 +105,8 @@ if __name__=='__main__':
         
         
         #Per ogni mese, calcolo la media di viaggi dei borough
-        media_corse_per_borough = ad.media_viaggi_mese(numero_corse_per_borough)
-        dict_media_corse_per_borough[f'{meseDaLeggere[mese_analizzato]}']= media_corse_per_borough
+        #media_corse_per_borough = ad.media_viaggi_mese(numero_corse_per_borough)
+        #dict_media_corse_per_borough[f'{meseDaLeggere[mese_analizzato]}']= media_corse_per_borough
         
         
     #Converto dizionario in dataFrame
@@ -115,6 +115,12 @@ if __name__=='__main__':
     #Calcolo il mese con la media maggiore
     mese_con_media_maggiore=ad.mese_con_media_maggiore(dict_media_corse_mese)
     
+    #Plot: istogramma
+    plot = ad.plot(media_corse_dF)
+    
+    #media_corse_dF.plot(x = 'Mese', y = 'Media', color = 'green', kind = 'bar')
+    #plt.title('Media corse al mese')
+    #plt.show()
     
         # #Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
         # #la data del mese, e come valore la media aritmetica delle corse giornaliere sulle corse dell'intero mese
