@@ -96,28 +96,31 @@ if __name__=='__main__':
         numero_corse_giornaliere = ad.conta_occorrenze(dati_filtrati[f"data_pickup_{meseDaLeggere[mese_analizzato]}"])
         dict_numero_corse_giornaliere[f'{meseDaLeggere[mese_analizzato]}']=numero_corse_giornaliere
         
-        media_corse_mese=(ad.media_viaggi_mese(numero_corse_giornaliere))
+        media_corse_mese=ad.media_viaggi_mese(numero_corse_giornaliere)
         dict_media_corse_mese[f'{meseDaLeggere[mese_analizzato]}']= media_corse_mese
+        
+        #CALCOLO LE STESSE INFORMAZIONI PER BOROUGH
+        numero_corse_per_borough = ad.conta_occorrenze(dati_filtrati[f"Pickup_Borough_{meseDaLeggere[mese_analizzato]}"])
+        dict_numero_corse_per_borough[f'Corse_per_borough_{meseDaLeggere[mese_analizzato]}']=numero_corse_per_borough
+        
+        
+        #Per ogni mese, calcolo la media di viaggi dei borough
+        media_corse_per_borough = ad.media_viaggi_mese(numero_corse_per_borough)
+        dict_media_corse_per_borough[f'{meseDaLeggere[mese_analizzato]}']= media_corse_per_borough
         
         
     #Converto dizionario in dataFrame
     media_corse_dF=pd.DataFrame(dict_media_corse_mese.items(), columns=['Mese', 'Media'])
+    
     #Calcolo il mese con la media maggiore
     mese_con_media_maggiore=ad.mese_con_media_maggiore(dict_media_corse_mese)
     
     
-    
-        
         # #Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
         # #la data del mese, e come valore la media aritmetica delle corse giornaliere sulle corse dell'intero mese
         # percentuale_corse_gionaliere= ad.percentuale_viaggi_al_mese(numero_corse_giornaliere,numero_corse_mese)
         # dict_percentuale_corse_giornaliere[f'{meseDaLeggere[mese_analizzato]}']= percentuale_corse_gionaliere
         
-        # #Dizionario con numero di corse giornaliere per ogni borough.
-        # #Chiave: borough 
-        # #valore: tutte le medie associate 
-        # numero_corse_per_borough = ad.conta_occorrenze(dati_filtrati[f"Pickup_Borough_{meseDaLeggere[mese_analizzato]}"])
-        # dict_numero_corse_per_borough[f'Corse_borough_{meseDaLeggere[mese_analizzato]}']=numero_corse_per_borough
         
         # #Calcolo dizionario con numero di corse medie per borough 
         # percentuale_corse_per_borough = ad.percentuale_viaggi_al_mese(numero_corse_per_borough, numero_corse_mese)
