@@ -21,7 +21,7 @@ class Analisi_dati():
         
     """
     
-    def filtra_mese_corretto(self,dati_taxi,indcol:str,anno_mese:str):
+    def filtra_mese_corretto(self,dati_taxi, indcol:str, anno_mese:str):
         """
         Parameters
         ----------
@@ -105,7 +105,12 @@ class Analisi_dati():
         numero_corse_mese = sum(numero_corse_giornaliere.values())
         media.append(numero_corse_mese/numero_giorni_mese)
         return media
-                
+               
+    def mese_con_media_maggiore(self, dict_media_corse_mese):
+        mese_con_media_maggiore=0
+        mese_con_media_maggiore=max(dict_media_corse_mese, key=dict_media_corse_mese.get)
+        print("Il mese con la media maggiore è ", mese_con_media_maggiore)
+        return mese_con_media_maggiore
                 
     def percentuale_viaggi_al_mese(self,numero_corse_giornaliere, numero_corse_mese):
         

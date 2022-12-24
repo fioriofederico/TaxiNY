@@ -47,7 +47,6 @@ if __name__=='__main__':
     numero_corse_giornaliere={}
     dict_media_corse_mese={}
     dict_numero_corse_giornaliere={}
-    dict_media_corse_giornaliere={}
     dict_numero_corse_per_borough={}
     dict_media_corse_per_borough={}
     dict_percentuale_corse_giornaliere={}
@@ -100,8 +99,14 @@ if __name__=='__main__':
         media_corse_mese=(ad.media_viaggi_mese(numero_corse_giornaliere))
         dict_media_corse_mese[f'{meseDaLeggere[mese_analizzato]}']= media_corse_mese
         
+        
     #Converto dizionario in dataFrame
     media_corse_dF=pd.DataFrame(dict_media_corse_mese.items(), columns=['Mese', 'Media'])
+    #Calcolo il mese con la media maggiore
+    mese_con_media_maggiore=ad.mese_con_media_maggiore(dict_media_corse_mese)
+    
+    
+    
         
         # #Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
         # #la data del mese, e come valore la media aritmetica delle corse giornaliere sulle corse dell'intero mese
