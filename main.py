@@ -73,18 +73,22 @@ if __name__=='__main__':
         ad=Analisi_dati()
         dati_filtrati= pd.DataFrame()
         dati_taxi = lf1.leggi_file_parquet()
-        dati_taxi = ad.filtra_mese_corretto(dati_taxi, 'tpep_pickup_datetime', meseDaLeggere[mese_analizzato])
+        # Commento momentaneamente la riga in quanto non si può analizzare il file causa il ciclo for risponde NoneType
+        #    dati_taxi = ad.filtra_mese_corretto(dati_taxi, 'tpep_pickup_datetime', meseDaLeggere[mese_analizzato])
+        #
         # prendo da prompt le colonne d'interesse separate da uno spazio
         # columns= (input('scrivere i gli indici delle colonne di interesse separate da uno spazio: '))
         # columns=columns.split(' ')
         # imposto e selezione le colonne del file che volgio analizzare
         zone_id = lf2.leggi_file_csv() #lettura csv: restituisce un dataFrame con gli id delle zone
-        borough_id = ad.borough_id_finder(zone_id['Borough']) #dizionario che associa id e borough
+        # Commento momentaneamente la riga in quanto non si può analizzare il file causa il ciclo for risponde NoneType
+        #borough_id = ad.borough_id_finder(zone_id['Borough']) #dizionario che associa id e borough
     
         columns = ["tpep_pickup_datetime", "tpep_dropoff_datetime", "PULocationID", "DOLocationID"] 
         # richiama il metodo che filtra il dataframe
-        for i in range(len(columns)):
-            dati_filtrati[f'{columns[i]}_{meseDaLeggere[mese_analizzato]}']= ad.filtra_dataFrame(dati_taxi, columns[i])
+        # Commento momentaneamente la riga in quanto non si può analizzare il file causa il ciclo for risponde NoneType
+        # for i in range(len(columns)):
+        #    dati_filtrati[f'{columns[i]}_{meseDaLeggere[mese_analizzato]}']= ad.filtra_dataFrame(dati_taxi, columns[i])
     
         # aggiungo un series al dataframe in cui le data delle partenze vengono sostituite da timestamp
         # dati_filtrati_jenuary["ts_pickup"]=dati_filtrati_jenuary['tpep_pickup_datetime'].apply(converti_timestamp)
