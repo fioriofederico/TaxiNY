@@ -7,7 +7,8 @@ In quale periodo dell'anno i taxi vengono utilizzati di più? Creare un file di 
  E invece quello con la media giornaliera più bassa?
 """
 
-import pandas as pd 
+import pandas as pd
+
 
 class Leggi_file:
     """
