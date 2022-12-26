@@ -7,13 +7,15 @@ In quale periodo dell'anno i taxi vengono utilizzati di più? Creare un file di 
  più alta? E invece quello con la media giornaliera più bassa?
  
  """
-from lettura_file import Leggi_file
-from analisi_dati import Analisi_dati
 import os
 import time
-import requests
+
 import pandas as pd
-import matplotlib.pyplot as plt
+import requests
+
+from analisi_dati import Analisi_dati
+from lettura_file import Leggi_file
+
 
 def coverti_location_id(X,m=dict):
     """
