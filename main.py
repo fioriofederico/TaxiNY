@@ -7,13 +7,16 @@ In quale periodo dell'anno i taxi vengono utilizzati di più? Creare un file di 
  più alta? E invece quello con la media giornaliera più bassa?
  
  """
-from lettura_file import Leggi_file
-from analisi_dati import Analisi_dati
 import os
 import time
-import requests
+
 import pandas as pd
-import matplotlib.pyplot as plt
+import pyarrow as pa
+import requests
+
+from analisi_dati import Analisi_dati
+from lettura_file import Leggi_file
+
 
 def coverti_location_id(X,m=dict):
     """
@@ -73,16 +76,20 @@ if __name__=='__main__':
         ad=Analisi_dati()
         dati_filtrati= pd.DataFrame()
         dati_taxi = lf1.leggi_file_parquet()
+
         dati_taxi = ad.filtra_mese_corretto(dati_taxi, 'tpep_pickup_datetime', meseDaLeggere[mese_analizzato])
+        #
         # prendo da prompt le colonne d'interesse separate da uno spazio
         # columns= (input('scrivere i gli indici delle colonne di interesse separate da uno spazio: '))
         # columns=columns.split(' ')
         # imposto e selezione le colonne del file che volgio analizzare
         zone_id = lf2.leggi_file_csv() #lettura csv: restituisce un dataFrame con gli id delle zone
+
         borough_id = ad.borough_id_finder(zone_id['Borough']) #dizionario che associa id e borough
     
         columns = ["tpep_pickup_datetime", "tpep_dropoff_datetime", "PULocationID", "DOLocationID"] 
         # richiama il metodo che filtra il dataframe
+
         for i in range(len(columns)):
             dati_filtrati[f'{columns[i]}_{meseDaLeggere[mese_analizzato]}']= ad.filtra_dataFrame(dati_taxi, columns[i])
     
