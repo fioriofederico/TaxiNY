@@ -43,10 +43,13 @@ if __name__=='__main__':
     typeData = ("yellow_tripdata_")
     #percorsoFile = input("dammi il percoso del file da leggere: ")
     #assegno una lista al mese da leggere 
-    meseDaLeggere =input(" Quali mesi vuoi analizzare? (formato input: anno-mese, diviso da spazi): ") 
+    meseDaLeggere =input("Quali mesi vuoi analizzare? (formato input: anno-mese, diviso da spazi): ") 
     meseDaLeggere=meseDaLeggere.split(' ') #split mi restituisce una lista di stringhe, cioè la lista di mesi che do in input
    # dati_filtrati= pd.DataFrame() #inizializzo dataFrame vuoto dei risultati 
-    
+    boroughDaLeggere =input("Quali borough vuoi analizzare?\n -1 Bronx\n -2 Brooklyn\n -3 EWR\n"
+                            "-4 Manhattan\n -5 Queens\n -6 Staten Island\n -7 Unknown\n "
+                            "Inserire il valore corrispondente al borough da analizzare: ")
+    boroughDaLeggere=boroughDaLeggere.split(' ')
     numero_corse_giornaliere={}
     dict_media_corse_mese={}
     dict_numero_corse_giornaliere={}
