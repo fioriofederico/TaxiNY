@@ -6,7 +6,8 @@ Created on Sat Dec 10 15:50:13 2022
 """
 
 import pandas as pd
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
+from datetime import datetime
 
 class Analisi_dati():
     
@@ -144,7 +145,8 @@ class Analisi_dati():
         mese_con_media_maggiore=max(dict_media_corse_mese, key=dict_media_corse_mese.get)
         print("Il mese con la media maggiore fra quelli analizzati è ", mese_con_media_maggiore)
         return mese_con_media_maggiore
-    
+
+
     
     def plot(self, media_corse_dF):
         """
@@ -158,10 +160,14 @@ class Analisi_dati():
             Istogramma che contiene sull'asse delle x i mesi e su quello delle y le medie associate
         """
        # plt.figure(figsize=(1, 90000))
+        now = datetime.now()
+        dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
+        dt_string = 'plotAnalisiDel'+dt_string + '.jpg'
+        print(dt_string)
         media_corse_dF.plot(x = 'Mese', y = 'Media', color = 'green', kind = 'bar')
         plt.title('Media corse al mese')
+        plt.savefig(dt_string, bbox_inches='tight', dpi=1200)
         plt.show()
-       # plt.savefig("output.jpg", bbox_inches='tight' )
        # plt.close()
         return 
         
@@ -185,11 +191,4 @@ class Analisi_dati():
         for i in numero_corse_giornaliere.keys():
             percentuale_corse_gionaliere[i]=numero_corse_giornaliere[i]/numero_corse_mese #mi restituisce la media su ogni giorno del mese
         return percentuale_corse_gionaliere
-        
-    
-    
-    
-    
-    
-    
     
