@@ -67,15 +67,10 @@ if __name__ == '__main__':
     meseDaLeggere = meseDaLeggere.split(' ')
     # split mi restituisce una lista di stringhe, cioè la lista di mesi che do in input
     # dati_filtrati= pd.DataFrame() #inizializzo dataFrame vuoto dei risultati
-    boroughDaLeggere = 0
-    while True:
-        try:
-            boroughDaLeggere = int(input("Quali borough vuoi analizzare?\n -1 Bronx\n -2 Brooklyn\n -3 EWR\n"
-                                         " -4 Manhattan\n -5 Queens\n -6 Staten Island\n -7 Unknown\n "
-                                         "Inserire il valore corrispondente al borough da analizzare: "))
-            break
-        except ValueError:
-            print('Perfavore inserire il numero del borough e non altri valori.')
+    boroughDaLeggere = input("Quali borough vuoi analizzare?\n -0 Bronx\n -1 Brooklyn\n -2 EWR\n"
+                                         " -3 Manhattan\n -4 Queens\n -5 Staten Island\n -6 Unknown\n "
+                                         "Inserire il valore corrispondente al borough da analizzare: ")
+    boroughDaLeggere = boroughDaLeggere.split(' ')
     boroughList = ["Bronx", "Brooklyn", "EWR", "Manhattan", "Queens", "Staten Island", "Unknown"]
     numero_corse_giornaliere = {}
     dict_media_corse_mese = {}
@@ -149,9 +144,10 @@ if __name__ == '__main__':
         # dict_media_corse_per_borough[f'{meseDaLeggere[mese_analizzato]}']= media_corse_per_borough
 
         #agiunta per calcolo della media di corse mensili in quel determinato mese nel borough di partenza
-
-        numeroCorse = numero_corse_per_borough[boroughList[boroughDaLeggere-1]]
-        media_corse_mese_borough[f"{meseDaLeggere[mese_analizzato]}"] = numeroCorse / len(numero_corse_giornaliere.keys())
+        for i in range(len(boroughDaLeggere)):
+            numeroCorse = numero_corse_per_borough[boroughList[boroughDaLeggere[i]]]
+            media_corse_mese_borough[f"{meseDaLeggere[mese_analizzato]}_{boroughList[boroughDaLeggere[i]]}"] = numeroCorse / len(numero_corse_giornaliere.keys())
+            plot = ad.plot(media_corse_mese_borough)
         print(media_corse_mese_borough)
     # Converto dizionario in dataFrame
     media_corse_dF = pd.DataFrame(dict_media_corse_mese.items(), columns=['Mese', 'Media'])
@@ -172,3 +168,6 @@ if __name__ == '__main__':
     # percentuale_corse_per_borough = ad.percentuale_viaggi_al_mese(numero_corse_per_borough, numero_corse_mese)
     # dict_percentuale_corse_per_borough[f'Media_corse_borough_{meseDaLeggere[mese_analizzato]}']=percentuale_corse_per_borough
     # """
+    #TODO  aggiornare il plot per avere un folder di archiviazione
+    #TODO  aggiungere media minore
+    #TODO 

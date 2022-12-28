@@ -147,7 +147,7 @@ class Analisi_dati():
 
 
     
-    def plot(self, media_corse_dF):
+    def plot(self, media_corse_dF, numberBorough):
         """
         Parameters
         ----------
@@ -162,7 +162,6 @@ class Analisi_dati():
         now = datetime.now()
         dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
         dt_string = 'plotAnalisiDel'+dt_string + '.jpg'
-        print(dt_string)
         media_corse_dF.plot(x = 'Mese', y = 'Media', color = 'green', kind = 'bar')
         plt.title('Media corse al mese')
         plt.savefig(dt_string, bbox_inches='tight', dpi=1200)
