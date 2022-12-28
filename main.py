@@ -7,14 +7,12 @@ In quale periodo dell'anno i taxi vengono utilizzati di più? Creare un file di 
  più alta? E invece quello con la media giornaliera più bassa?
  
  """
-import os
 import time
 
 import pandas as pd
-import pyarrow as pa
-import requests
 import csv
 
+from download_file import Download_file 
 from analisi_dati import Analisi_dati
 from lettura_file import Leggi_file
 
@@ -58,11 +56,7 @@ def converti_solo_data(X):
     return data[0]
 
 if __name__ == '__main__':
-    path = ("./inputFile/")
-    extensionFile = (".parquet")
-    typeData = ("yellow_tripdata_")
-    # percorsoFile = input("dammi il percoso del file da leggere: ")
-    # assegno una lista al mese da leggere
+    
     meseDaLeggere = input("Quali mesi vuoi analizzare? (formato input: anno-mese, diviso da spazi): ")
     meseDaLeggere = meseDaLeggere.split(' ')
     # split mi restituisce una lista di stringhe, cioè la lista di mesi che do in input
@@ -82,26 +76,15 @@ if __name__ == '__main__':
     media_corse_mese_borough = {}
     for mese_analizzato in range(len(meseDaLeggere)):  # scorro la lista dei mesi
         # scarico i file
-        if os.path.isdir(path) == False:
-            os.makedirs(path)
-        file = typeData + meseDaLeggere[mese_analizzato] + extensionFile
-        percorsoFile = path + file
-        if os.path.isfile(percorsoFile) == False:
-            URL = ("https://d37ci6vzurychx.cloudfront.net/trip-data/") + file
-            response = requests.get(URL)
-            open(percorsoFile, "wb").write(response.content)
-        fileCsv = ("taxi+_zone_lookup.csv")
-        if os.path.isfile(path + fileCsv) == False:
-            URLCsv = ("https://d37ci6vzurychx.cloudfront.net/misc/") + fileCsv
-            response = requests.get(URLCsv)
-            percorsoFileCsv = path + fileCsv
-            open(percorsoFileCsv, "wb").write(response.content)
+        load= Download_file()
+        load.check_or_download_file_parquet(meseDaLeggere[mese_analizzato])
+        load.check_or_download_file_csv()
+        
 
-        lf1 = Leggi_file(percorsoFile)
-        lf2 = Leggi_file(path + fileCsv)
+        lf = Leggi_file(meseDaLeggere[mese_analizzato])
         ad = Analisi_dati()
         dati_filtrati = pd.DataFrame()
-        dati_taxi = lf1.leggi_file_parquet()
+        dati_taxi = lf.leggi_file_parquet()
 
         dati_taxi = ad.filtra_mese_corretto(dati_taxi, 'tpep_pickup_datetime', meseDaLeggere[mese_analizzato])
         #
@@ -109,7 +92,7 @@ if __name__ == '__main__':
         # columns= (input('scrivere i gli indici delle colonne di interesse separate da uno spazio: '))
         # columns=columns.split(' ')
         # imposto e selezione le colonne del file che volgio analizzare
-        zone_id = lf2.leggi_file_csv()  # lettura csv: restituisce un dataFrame con gli id delle zone
+        zone_id = lf.leggi_file_csv()  # lettura csv: restituisce un dataFrame con gli id delle zone
 
         borough_id = ad.borough_id_finder(zone_id['Borough'])  # dizionario che associa id e borough
 
