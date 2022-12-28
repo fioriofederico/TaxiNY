@@ -147,7 +147,7 @@ class Analisi_dati():
 
 
     
-    def plot(self, media_corse_dF, numberBorough):
+    def plot(self, media_corse_dF):
         """
         Parameters
         ----------
