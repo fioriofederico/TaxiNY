@@ -127,8 +127,7 @@ class Analisi_dati():
         numero_corse_mese = sum(numero_corse_giornaliere.values())
         media=numero_corse_mese/numero_giorni_mese
         return media
-               
-    
+
     def mese_con_media_maggiore(self, dict_media_corse_mese):
         """
         Parameters
