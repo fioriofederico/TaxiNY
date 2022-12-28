@@ -145,8 +145,9 @@ if __name__ == '__main__':
 
         #agiunta per calcolo della media di corse mensili in quel determinato mese nel borough di partenza
         for i in range(len(boroughDaLeggere)):
-            numeroCorse = numero_corse_per_borough[boroughList[boroughDaLeggere[i]]]
-            media_corse_mese_borough[f"{meseDaLeggere[mese_analizzato]}_{boroughList[boroughDaLeggere[i]]}"] = numeroCorse / len(numero_corse_giornaliere.keys())
+            indice=int(boroughDaLeggere[i])
+            numeroCorse = numero_corse_per_borough[boroughList[indice]]
+            media_corse_mese_borough[f"{meseDaLeggere[mese_analizzato]}_{boroughList[indice]}"] = numeroCorse / len(numero_corse_giornaliere.keys())
             plot = ad.plot(media_corse_mese_borough)
         print(media_corse_mese_borough)
     # Converto dizionario in dataFrame
