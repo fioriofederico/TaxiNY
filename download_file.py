@@ -37,7 +37,7 @@ class Download_file:
         if os.path.isfile(percorsoFile) == False:
             URL = ("https://d37ci6vzurychx.cloudfront.net/trip-data/") + file
             response = requests.get(URL)
-            return open(self.percorsoFile, "wb").write(response.content)
+            return open(percorsoFile, "wb").write(response.content)
         
     def check_or_download_file_csv(self):
         """
