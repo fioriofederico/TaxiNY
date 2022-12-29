@@ -16,6 +16,20 @@ class Download_file:
         self.typeData = ("yellow_tripdata_")
     
     def check_or_download_file_parquet(self, meseDaLeggere: str):
+        """
+        
+
+        Parameters
+        ----------
+        meseDaLeggere : str
+            il mese del file da scaricare
+
+        Returns 
+        -------
+        Se il file non è già stato scaricato, allora crea un a cartella inputFile
+        e ci scarican il file all'inteno
+
+        """
         file = self.typeData + meseDaLeggere + self.extensionFile
         percorsoFile = self.path + file
         if os.path.isdir(self.path) == False:
@@ -26,6 +40,15 @@ class Download_file:
             return open(self.percorsoFile, "wb").write(response.content)
         
     def check_or_download_file_csv(self):
+        """
+        
+
+        Returns
+        -------
+        Controlla che il fle Csv da scaricicare non sia nella cartella inputFile, altrimenti 
+        lo scarica nella cartella 
+
+        """
         fileCsv = ("taxi+_zone_lookup.csv")
         if os.path.isfile(self.path + fileCsv) == False:
             URLCsv = ("https://d37ci6vzurychx.cloudfront.net/misc/") + fileCsv
