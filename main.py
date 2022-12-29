@@ -118,8 +118,8 @@ if __name__ == '__main__':
         dict_media_corse_mese[f'{meseDaLeggere[mese_analizzato]}'] = media_corse_mese
 
         # CALCOLO LE STESSE INFORMAZIONI PER BOROUGH
-        numero_corse_per_borough = ad.conta_occorrenze(
-            dati_filtrati[f"Pickup_Borough_{meseDaLeggere[mese_analizzato]}"])
+        numero_corse_per_borough = ad.conta_occorrenze()
+        dati_filtrati([f"Pickup_Borough_{meseDaLeggere[mese_analizzato]}"])
         dict_numero_corse_per_borough[f'Corse_per_borough_{meseDaLeggere[mese_analizzato]}'] = numero_corse_per_borough
 
         # Per ogni mese, calcolo la media di viaggi dei borough
@@ -128,16 +128,17 @@ if __name__ == '__main__':
 
         #agiunta per calcolo della media di corse mensili in quel determinato mese nel borough di partenza
         for i in range(len(boroughDaLeggere)):
-            indice=int(boroughDaLeggere[i])
-            numeroCorse = numero_corse_per_borough[boroughList[indice]]
-            media_corse_mese_borough[f"{meseDaLeggere[mese_analizzato]}_{boroughList[indice]}"] = numeroCorse / len(numero_corse_giornaliere.keys())
-            plot = ad.plot(media_corse_mese_borough)
+             indice=int(boroughDaLeggere[i])
+             numeroCorse = numero_corse_per_borough[boroughList[indice]]
+             media_corse_mese_borough[f"{meseDaLeggere[mese_analizzato]}_{boroughList[indice]}"] = numeroCorse / len(numero_corse_giornaliere.keys())
+             plot = ad.plot(media_corse_mese_borough)
         print(media_corse_mese_borough)
     # Converto dizionario in dataFrame
     media_corse_dF = pd.DataFrame(dict_media_corse_mese.items(), columns=['Mese', 'Media'])
 
     # Calcolo il mese con la media maggiore
     mese_con_media_maggiore = ad.mese_con_media_maggiore(dict_media_corse_mese)
+    mese_con_media_minore = ad.mese_con_media_minore(dict_media_corse_mese)
 
     # Plot: istogramma
     plot = ad.plot(media_corse_dF)
