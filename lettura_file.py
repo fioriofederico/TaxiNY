@@ -8,6 +8,7 @@ In quale periodo dell'anno i taxi vengono utilizzati di più? Creare un file di 
 """
 
 import pandas as pd
+import pyarrow as pa
 
 
 class Leggi_file:
@@ -15,13 +16,18 @@ class Leggi_file:
     lettura di un file generico
     """
     
-    def __init__(self, percorsoFile:str):
+    def __init__(self,meseDaLeggere: str):
         
         """
         Costruttore
         """
-        
-        self.percorsoFile = percorsoFile
+        self.path = ("./inputFile/")
+        self.extensionFile = (".parquet")
+        self.typeData = ("yellow_tripdata_")
+        self.fileCsv = ("taxi+_zone_lookup.csv")
+        self.file=self.typeData + meseDaLeggere + self.extensionFile
+        self.percorsoFile=self.path + self.file
+        self.percorsoFileCsv = self.path + self.fileCsv
         
     def leggi_file_parquet(self):
         
@@ -39,7 +45,7 @@ class Leggi_file:
         Lettura dei file in formato .csv
         """
         try:
-            dati_taxi = pd.read_csv(self.percorsoFile)
+            dati_taxi = pd.read_csv(self.percorsoFileCsv)
             return dati_taxi
         except:
             print("il file non è in formato csv")
