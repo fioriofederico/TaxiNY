@@ -22,8 +22,21 @@ Durante un’analisi preliminare del dataset, il dataframe viene filtrato per co
 
 Nella fase di input viene richiesto il periodo/i di cui si vuole effettuare l’analisi, che devono essere forniti secondo il formato anno-mese e intervallati da spazi (es. 2022-01 2022-02), e l’identificativo del/i borough da considerare (che viene assegnato secondo la legenda presente nel testo della richiesta di input), anch’essi inseriti intervallati da spazi (es. 0 1 2).
 
-
-
+```
+Quali mesi vuoi analizzare? (formato input: anno-mese, diviso da spazi): 2022-01 2022-02
+```
+```
+Quali borough vuoi analizzare?
+ -0 Bronx
+ -1 Brooklyn
+ -2 EWR
+ -3 Manhattan
+ -4 Queens
+ -5 Staten Island
+ -6 Unknown
+ Inserire il valore corrispondente al borough da analizzare: 0 1 2
+ ```
+ 
 ###### Analisi dei dati
 
 Nella parte relativa all’analisi dei dati, i datasets vengono ulteriormente filtrati, per eliminare i dati non validi e i valori NaN che potrebbero portare l’analisi ad un risultato errato.
