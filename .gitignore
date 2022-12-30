@@ -131,3 +131,4 @@ dmypy.json
 /inputFile/
 /outputFile/
 /output.csv
+!/DownloadMassivo.py

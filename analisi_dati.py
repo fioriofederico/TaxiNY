@@ -175,7 +175,6 @@ class Analisi_dati():
         """
        # plt.figure(figsize=(1, 90000))
         dt_string = './outputFile/' + pathFolder + '/ConfrontoMesiNy.jpg'
-        print(dt_string)
         media_corse_dF.plot(x = 'Mese', y = 'Media', color = 'green', kind = 'bar')
         plt.title('Media corse al mese')
         plt.savefig(dt_string, bbox_inches='tight', dpi=1200)
