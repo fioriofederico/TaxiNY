@@ -1,25 +1,38 @@
-Come si muovono i taxi a New York? 
-In questo progetto svolgiamo un'analisi dei taxi a New York. In particolare, siamo curiosi di rispondere ad alcune specifiche Research Questions (RQ) che possono aiutare i tassisti a pianificare i loro spostamenti in città e ai clienti ad avere suggerimenti sulla convenienza dell’utilizzo di questo servizio.
-Per questo progetto utilizziamo i dati pubblici delle rotte dei Taxi a NYC disponibili su https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page. 
-Per rispondere alle RQ teniamo conto dei dati relativi ai Yellow Taxi per l'anno 2022.
-Prima di iniziare
-1. Fare il download di Yellow Taxi Trip Records (CSV) 2022. Iniziate sul dataset di June.
-2. A causa delle dimensioni dei file, vedrete che inserire tutti dati in memoria è difficile. Se siete in grado di caricare i dati in memoria, sarà difficile eseguire qualche analisi. Per questo motivo, prima di iniziare vi invitiamo a dare un'occhiata alle RQ e a pensare ad una strategia per trattare i dati. Come liberare la memoria: https://teamtreehouse.com/community/how-to-delete-a-variable-in-python
-3. Per poter effettuare l'analisi sulle borough (distretto) è necessario combinare i dati delle rotte dei taxi con il set di dati che si trova in taxi_zone_lookup.csv. Date un'occhiata qui: https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html
-4. Studiare il dataset:
-•	Per capire in che cosa consistono i dati leggete la leggenda: https://www1.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_yellow.pdf
-•	Leggete qualche informazione su come funzionano i taxi a New York per poter fare osservazioni significative: http://www.nyc.gov/assets/tlc/downloads/pdf/taxi_information.pdf
-5. Controllate per bene i dati. Bisogna cambiare qualcosa? Per esempio: ci sono rotte con distanza pari a 0, hanno senso? Controllate se sono presenti valori NaN e decidete come trattarli. Ci sono informazioni inutili?
-!!!Molto Importante!!!
-1. Leggete tutte le RQ prima di inziare a scrivere codice.
-2. Come ogni attività di analisi dei dati, non esiste un modo unico e corretto per rispondere alle RQ. Poiché i risultati che otterrete per ogni RQ possono dipendere dalle scelte che farete durante l'analisi, è molto importante (e necessario) che descriviate ogni singola decisione che prenderete e tutti i passi che farete.
-3. All'inizio della vostra analisi, scegliete e indicate chiaramente quale borough considerate per la conduzione dell'analisi: il borough di partenza o quello di arrivo.
-4. Il vostro codice deve essere il più generico possibile. Deve essere in grado di funzionare per ogni computer/anno/mese/borough senza dover cambiare righe di codice.
-Research question
-In quale periodo dell'anno i taxi vengono utilizzati di più? Creare un file di risultati e un grafico che, per ogni mese, indichi il numero medio di viaggi registrati ogni giorno. A causa delle differenze tra le zone di New York, vogliamo visualizzare le stesse informazioni per ogni borough. Notate qualche differenza tra di loro? Qual è il mese con la media giornaliera più alta? E invece quello con la media giornaliera più bassa?
-Input: anno, mese*, borough*
-Output: file, grafico 
-Suggerimenti
-1. Concentratevi su un solo mese, eseguendo tutte le vostre analisi su un unico set di dati.
-2. Ripetere la stessa analisi negli altri mesi.
-3. Combinate i risultati.
+                                                     #Studio della frequenza dei viaggi dei taxi a NY
+
+Questo programma fornisce uno studio sulla frequenza con la quale i taxi vengono utilizzati a NY. In particolare, restituisce il periodo in cui vengono adoperati più di frequente e quello in cui vengono utilizzati meno. 
+L’analisi dell’attività può essere utile ai tassisti per pianificare i loro spostamenti in città, e al tempo stesso, può rappresentare per i clienti una linea guida sulla convenienza o meno dell’utilizzo di questo servizio. 
+
+Per lo svolgimento di quest’analisi utilizziamo i dati pubblici delle rotte dei Taxi a NYC disponibili su https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page. 
+
+
+##Svolgimento dell’analisi
+
+Download dei dati
+
+Per svolgere l’analisi è necessario effettuare il download dei dati da analizzare. In particolare, ci soffermiamo sul dataset di Yellow Taxi Trip Records (CSV) 2022 (https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page).
+I dati vengono quindi inseriti in un dataframe in ambiente Spyder. 
+
+Analisi preliminare
+
+Durante un’analisi preliminare del dataset, il dataframe viene filtrato per considerare solo le series che contengono i dati di nostro interesse. In particolare, ci soffermiamo sulla parte relativa alle date di partenza/arrivo dei taxi e ai rispettivi borough in cui vengono adoperati, a ognuno dei quali viene associato un codice identificativo (locationID). Inoltre, gli stessi set relativi alle date di partenza dei taxi, vengono filtrati, eliminando l’orario di prelievo del cliente, poiché superfluo ai fini dell’analisi. 
+
+Input
+
+Nella fase di input viene richiesto il periodo/i di cui si vuole effettuare l’analisi, che devono essere forniti secondo il formato anno-mese e intervallati da spazi (es. 2022-01 2022-02), e l’identificativo del/i borough da considerare (che viene assegnato secondo la legenda presente nel testo della richiesta di input), anch’essi inseriti intervallati da spazi (es. 0 1 2).
+
+ 
+
+
+Analisi dei dati
+
+Nella parte relativa all’analisi dei dati, i datasets vengono ulteriormente filtrati, per eliminare i dati non validi e i valori NaN che potrebbero portare l’analisi ad un risultato errato.
+In seguito, viene valutato il periodo di maggiore e minore frequenza di utilizzo dei taxi, attraverso il confronto della media delle corse relative ad ogni mese. 
+Viene quindi calcolata la media aritmetica delle corse del mese in esame sui giorni dell’intero mese, e viene ripetuta la stessa analisi considerando la media mensile per ogni borough fornito nella fase di input. 
+
+Ouput
+
+Il prodotto dell’analisi dei dataset è facilmente interpretabile attraverso lo studio dei grafici che vengono forniti in output. In particolare, viene restituito un istogramma che mostra la media aritmetica per ogni mese considerato, e la media per ogni borough.
+Inoltre, il risultato dell’analisi viene fornito attraverso una stringa che restituisce il mese, fra quelli in esame, che ha riscontrato la media di viaggi mensile maggiore, e quello che invece ha riscontrato la media minore.
+
+Esempio:
