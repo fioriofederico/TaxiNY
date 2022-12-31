@@ -49,3 +49,8 @@ Il prodotto dell’analisi dei dataset è facilmente interpretabile attraverso l
 Inoltre, il risultato dell’analisi viene fornito attraverso una stringa che restituisce il mese, fra quelli in esame, che ha riscontrato la media di viaggi mensile maggiore, e quello che invece ha riscontrato la media minore.
 
 Esempio:
+
+<img alt="il seguente output mostra l&#39;intera città di NY" height="800" src="./data/img/ConfrontoMesiNy.png" title="Output Su Ny"/>
+<img alt="il seguente output mostra solo il borough di Broklyn" height="800" src="./data/img/Brooklyn.png" title="Output Borough Brooklyn"/>
+
+
