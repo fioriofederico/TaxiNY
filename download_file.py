@@ -16,10 +16,10 @@ class Download_file:
         self.path = ("./inputFile/")
         self.extensionFile = (".parquet")
         self.typeData = ("yellow_tripdata_")
+        
     
     def check_or_download_file_parquet(self, meseDaLeggere: str):
         """
-        
 
         Parameters
         ----------
@@ -41,10 +41,10 @@ class Download_file:
             response = requests.get(URL)
             return open(percorsoFile, "wb").write(response.content)
         
+        
     def check_or_download_file_csv(self):
         """
         
-
         Returns
         -------
         Controlla che il fle Csv da scaricicare non sia nella cartella inputFile, altrimenti 
@@ -59,6 +59,28 @@ class Download_file:
             return open(percorsoFileCsv, "wb").write(response.content)
 
     def create_outputfile(self, dict_numero_corse_giornaliere: dict, dict_numero_corse_per_borough: dict, media_corse_mese_borough: dict,boroughDaLeggere: list, meseDaLeggere: list):
+        
+        """
+        
+        Crea una cartella di output, il cui nome è costituito da data e l'ora in cui è stata svolta l'analisi, 
+        che contiene i plot e i risultati
+        
+        Parameters
+        ----------
+        dict_numero_corse_giornaliere : dict
+        dict_numero_corse_per_borough: dict
+        media_corse_mese_borough: dict
+        boroughDaLeggere: list
+        meseDaLeggere: list
+        
+
+        Returns 
+        -------
+        dt_string : nome della cartella
+        path : path della cartella creata
+        
+        """
+        
         boroughList = ["Bronx", "Brooklyn", "EWR", "Manhattan", "Queens", "Staten Island", "Unknown"]
         now = datetime.now()
         dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")

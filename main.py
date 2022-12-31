@@ -42,18 +42,44 @@ def generateCSV(mediaMaxNy, mediaMinNy, boroughAnalizzati, pathSaving):
 
 
 def coverti_location_id(X, m=dict):
+    
     """
     funzione aplicabile ad una series, che riconsce gli id delle location 
     presi dal csv e crea una series con i borough corrospondenti
+    
+    Parameters
+    ----------
+    X : 
+        
+    m : dict 
+
+    Returns 
+    -------
+    
     """
+    
     for i in m.keys():
         for j in range(len(m[i])):
             if X == m[i][j]:
                 X = i
                 return X
 
-# funzione che restituisce solo la data da un stringa con data ed ora
+
 def converti_solo_data(X):
+    
+    """
+    Funzione che, data una stringa costituita da data e ora, 
+    mi restituisce la stringa con solo la data
+    
+        Parameters
+        ----------
+        X : 
+
+        Returns 
+        -------
+        data[0] : stringa con solo la data 
+        
+        """
     data = str(X).split(' ')
     return data[0]
 
@@ -62,8 +88,6 @@ if __name__ == '__main__':
 
     meseDaLeggere = input("Quali mesi vuoi analizzare? (formato input: anno-mese, diviso da spazi): ")
     meseDaLeggere = meseDaLeggere.split(' ')
-    # split mi restituisce una lista di stringhe, cioè la lista di mesi che do in input
-    # dati_filtrati= pd.DataFrame() #inizializzo dataFrame vuoto dei risultati
     boroughDaLeggere = input("Quali borough vuoi analizzare?\n -0 Bronx\n -1 Brooklyn\n -2 EWR\n"
                              " -3 Manhattan\n -4 Queens\n -5 Staten Island\n -6 Unknown\n "
                              "Inserire il valore corrispondente al borough da analizzare: ")
@@ -136,12 +160,4 @@ if __name__ == '__main__':
     plot = ad.plot(media_corse_dF, dt_string)
     csvGenerator = generateCSV(mese_con_media_maggiore, mese_con_media_minore[0], media_corse_mese_borough, path)
 
-    # #Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
-    # #la data del mese, e come valore la media aritmetica delle corse giornaliere sulle corse dell'intero mese
-    # percentuale_corse_gionaliere= ad.percentuale_viaggi_al_mese(numero_corse_giornaliere,numero_corse_mese)
-    # dict_percentuale_corse_giornaliere[f'{meseDaLeggere[mese_analizzato]}']= percentuale_corse_gionaliere
-
-    # #Calcolo dizionario con numero di corse medie per borough
-    # percentuale_corse_per_borough = ad.percentuale_viaggi_al_mese(numero_corse_per_borough, numero_corse_mese)
-    # dict_percentuale_corse_per_borough[f'Media_corse_borough_{meseDaLeggere[mese_analizzato]}']=percentuale_corse_per_borough
-    # """
+    
