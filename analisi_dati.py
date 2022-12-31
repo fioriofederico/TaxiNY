@@ -8,7 +8,6 @@ Created on Sat Dec 10 15:50:13 2022
 import pandas as pd
 import matplotlib.pyplot as plt
 
-
 class Analisi_dati():
     
     """
@@ -144,8 +143,8 @@ class Analisi_dati():
         mese_con_media_maggiore=max(dict_media_corse_mese, key=dict_media_corse_mese.get)
         print("Il mese con la media maggiore fra quelli analizzati è ", mese_con_media_maggiore)
         return mese_con_media_maggiore
-
-    def mese_con_media_minore(self, dict_media_corse_mese):
+    
+    def mese_con_media_minore(self,dict_media_corse_mese):
         """
         Parameters
         ----------
@@ -155,9 +154,9 @@ class Analisi_dati():
         -------
         TYPE  mese_con_media_minore
              il mese che ha la media minore
-
+        
         """
-        mese_con_media_minore = 0
+        mese_con_media_minore=0
         minimo = min(dict_media_corse_mese.values())
         mese_con_media_minore = [key for key in dict_media_corse_mese if dict_media_corse_mese[key] == minimo]
         print("Il mese con la media minore fra quelli analizzati è ", mese_con_media_minore)
@@ -175,11 +174,9 @@ class Analisi_dati():
             Istogramma che contiene sull'asse delle x i mesi e su quello delle y le medie associate
         """
        # plt.figure(figsize=(1, 90000))
-        dt_string = pathFolder + '/ConfrontoMesiNy.png'
-        media_corse_dF.plot(x='Mese', y='Media', color='green', kind='bar')
+        dt_string = pathFolder + '/ConfrontoMesiNy.jpg'
+        media_corse_dF.plot(x = 'Mese', y = 'Media', color = 'green', kind = 'bar')
         plt.title('Media corse al mese')
-        plt.draw()
-        plt.xticks(rotation=30, ha='right')
         plt.savefig(dt_string, bbox_inches='tight', dpi=1200)
         plt.show()
        # plt.close()

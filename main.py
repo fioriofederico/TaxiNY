@@ -19,14 +19,10 @@ from download_file import Download_file
 from analisi_dati import Analisi_dati
 from lettura_file import Leggi_file
 
-"""def generateCSV(mediaMaxNy, mediaMinNy, boroughAnalizzati, pathSaving):
-    data = [[mediaMaxNy, mediaMinNy]]
+
+def generateCSV(mediaMaxNy, mediaMinNy, boroughAnalizzati, pathSaving):
+    data = [mediaMaxNy, mediaMinNy]
     print(len(boroughAnalizzati))
-    print(mediaMinNy)
-    print(mediaMaxNy)
-
-    for i in range(len(boroughAnalizzati)):
-
     header = ['Means Max Courses On NY', 'Means Min Courses On NY']
 
     with open(pathSaving + '/output.csv', 'w', encoding='UTF8', newline='') as f:
@@ -39,7 +35,7 @@ from lettura_file import Leggi_file
         writer.writerows(data)
 
     f.close()
-    return "File Generato"""
+    return "File Generato"
 
 
 def coverti_location_id(X, m=dict):
@@ -65,8 +61,9 @@ def converti_solo_data(X):
     data = str(X).split(' ')
     return data[0]
 
+
 if __name__ == '__main__':
-    
+
     meseDaLeggere = input("Quali mesi vuoi analizzare? (formato input: anno-mese, diviso da spazi): ")
     meseDaLeggere = meseDaLeggere.split(' ')
     # split mi restituisce una lista di stringhe, cioè la lista di mesi che do in input
@@ -84,9 +81,10 @@ if __name__ == '__main__':
     dict_percentuale_corse_giornaliere = {}
     dict_percentuale_corse_per_borough = {}
     media_corse_mese_borough = {}
+
     for mese_analizzato in range(len(meseDaLeggere)):  # scorro la lista dei mesi
         # scarico i file
-        load= Download_file()
+        load = Download_file()
         load.check_or_download_file_parquet(meseDaLeggere[mese_analizzato])
         load.check_or_download_file_csv()
 
@@ -131,30 +129,31 @@ if __name__ == '__main__':
             dati_filtrati[f"Pickup_Borough_{meseDaLeggere[mese_analizzato]}"])
         dict_numero_corse_per_borough[f'Corse_per_borough_{meseDaLeggere[mese_analizzato]}'] = numero_corse_per_borough
 
-        # Per ogni mese, calcolo la media di viaggi dei borough
-        # media_corse_per_borough = ad.media_viaggi_mese(numero_corse_per_borough)
-        # dict_media_corse_per_borough[f'{meseDaLeggere[mese_analizzato]}']= media_corse_per_borough
+    # Per ogni mese, calcolo la media di viaggi dei borough
+    # media_corse_per_borough = ad.media_viaggi_mese(numero_corse_per_borough)
+    # dict_media_corse_per_borough[f'{meseDaLeggere[mese_analizzato]}']= media_corse_per_borough
 
-        #agiunta per calcolo della media di corse mensili in quel determinato mese nel borough di partenza
-        now = datetime.now()
-        dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
-        path = './outputFile/' + dt_string
-        if (os.path.isdir(path) == False):
-            os.makedirs(path)
-        for i in range(len(boroughDaLeggere)):
-            indice = int(boroughDaLeggere[i])
-            media_corse_mese_borough[f"{boroughList[indice]}"] = {}
-            for mese_analizzato in range(len(meseDaLeggere)):
-                numeroCorse = dict_numero_corse_per_borough[f"Corse_per_borough_{meseDaLeggere[mese_analizzato]}"][f"{boroughList[indice]}"]
-                media_corse_mese_borough[f"{boroughList[indice]}"][f"{meseDaLeggere[mese_analizzato]}"] = numeroCorse / len(dict_numero_corse_giornaliere[f"{meseDaLeggere[mese_analizzato]}"])
-            borough = str(boroughList[indice])
-            plt.title('Analisi del Borough: ' + borough)
-            plt.bar(media_corse_mese_borough[f"{boroughList[indice]}"].keys(),
-                    media_corse_mese_borough[f"{boroughList[indice]}"].values(), color='green')
-            plt.draw()
-            plt.xticks(rotation=30, ha='right')
-            plt.savefig(path + "/" + borough + ".png", bbox_inches='tight', dpi=1200)
-            plt.show()
+    # agiunta per calcolo della media di corse mensili in quel determinato mese nel borough di partenza
+
+    now = datetime.now()
+    dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
+    path = './outputFile/' + dt_string
+    if (os.path.isdir(path) == False):
+        os.makedirs(path)
+    for i in range(len(boroughDaLeggere)):
+        indice = int(boroughDaLeggere[i])
+        media_corse_mese_borough[f"{boroughList[indice]}"] = {}
+        for mese_analizzato in range(len(meseDaLeggere)):
+            numeroCorse = dict_numero_corse_per_borough[f"Corse_per_borough_{meseDaLeggere[mese_analizzato]}"][
+                f"{boroughList[indice]}"]
+            media_corse_mese_borough[f"{boroughList[indice]}"][f"{meseDaLeggere[mese_analizzato]}"] = numeroCorse / len(
+                dict_numero_corse_giornaliere[f"{meseDaLeggere[mese_analizzato]}"])
+        borough = str(boroughList[indice])
+        plt.title('Analisi del Borough: ' + borough)
+        plt.bar(media_corse_mese_borough[f"{boroughList[indice]}"].keys(),
+                media_corse_mese_borough[f"{boroughList[indice]}"].values(), color='green')
+        plt.savefig(path + "/" + borough + ".jpg", bbox_inches='tight', dpi=1200)
+        plt.show()
 
     # Converto dizionario in dataFrame
     media_corse_dF = pd.DataFrame(dict_media_corse_mese.items(), columns=['Mese', 'Media'])
@@ -164,8 +163,8 @@ if __name__ == '__main__':
     mese_con_media_minore = ad.mese_con_media_minore(dict_media_corse_mese)
 
     # Plot: istogramma
-    plot = ad.plot(media_corse_dF,path)
-    #csvGenerator = generateCSV(mese_con_media_maggiore,'99')
+    plot = ad.plot(media_corse_dF, path)
+    csvGenerator = generateCSV(mese_con_media_maggiore, mese_con_media_minore, media_corse_mese_borough, path)
 
     # #Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
     # #la data del mese, e come valore la media aritmetica delle corse giornaliere sulle corse dell'intero mese
