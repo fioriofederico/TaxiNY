@@ -145,11 +145,8 @@ if __name__ == '__main__':
             indice = int(boroughDaLeggere[i])
             media_corse_mese_borough[f"{boroughList[indice]}"] = {}
             for mese_analizzato in range(len(meseDaLeggere)):
-                numeroCorse = dict_numero_corse_per_borough[f"Corse_per_borough_{meseDaLeggere[mese_analizzato]}"][
-                    f"{boroughList[indice]}"]
-                media_corse_mese_borough[f"{boroughList[indice]}"][
-                    f"{meseDaLeggere[mese_analizzato]}"] = numeroCorse / len(
-                    dict_numero_corse_giornaliere[f"{meseDaLeggere[mese_analizzato]}"])
+                numeroCorse = dict_numero_corse_per_borough[f"Corse_per_borough_{meseDaLeggere[mese_analizzato]}"][f"{boroughList[indice]}"]
+                media_corse_mese_borough[f"{boroughList[indice]}"][f"{meseDaLeggere[mese_analizzato]}"] = numeroCorse / len(dict_numero_corse_giornaliere[f"{meseDaLeggere[mese_analizzato]}"])
             borough = str(boroughList[indice])
             plt.title('Analisi del Borough: ' + borough)
             plt.bar(media_corse_mese_borough[f"{boroughList[indice]}"].keys(),
@@ -167,7 +164,7 @@ if __name__ == '__main__':
     mese_con_media_minore = ad.mese_con_media_minore(dict_media_corse_mese)
 
     # Plot: istogramma
-    plot = ad.plot(media_corse_dF)
+    plot = ad.plot(media_corse_dF,path)
     #csvGenerator = generateCSV(mese_con_media_maggiore,'99')
 
     # #Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave

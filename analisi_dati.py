@@ -163,7 +163,7 @@ class Analisi_dati():
         print("Il mese con la media minore fra quelli analizzati è ", mese_con_media_minore)
         return mese_con_media_minore
     
-    def plot(self, media_corse_dF):
+    def plot(self, media_corse_dF, pathFolder):
         """
         Parameters
         ----------
@@ -175,7 +175,7 @@ class Analisi_dati():
             Istogramma che contiene sull'asse delle x i mesi e su quello delle y le medie associate
         """
        # plt.figure(figsize=(1, 90000))
-        dt_string = './outputFile/' + pathFolder + '/ConfrontoMesiNy.png'
+        dt_string = pathFolder + '/ConfrontoMesiNy.png'
         media_corse_dF.plot(x='Mese', y='Media', color='green', kind='bar')
         plt.title('Media corse al mese')
         plt.draw()
