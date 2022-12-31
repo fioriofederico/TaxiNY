@@ -7,20 +7,18 @@ In quale periodo dell'anno i taxi vengono utilizzati di più? Creare un file di 
  più alta? E invece quello con la media giornaliera più bassa?
  
  """
-import os
+ 
 import time
 
 import pandas as pd
 import csv
-from datetime import datetime
-import matplotlib.pyplot as plt
 
 from download_file import Download_file
 from analisi_dati import Analisi_dati
 from lettura_file import Leggi_file
 
 
-"""def generateCSV(mediaMaxNy, mediaMinNy, boroughAnalizzati, pathSaving):
+def generateCSV(mediaMaxNy, mediaMinNy, boroughAnalizzati, pathSaving):
     data = [[mediaMaxNy, mediaMinNy]]
     print(len(boroughAnalizzati))
     print(mediaMinNy)
@@ -28,19 +26,19 @@ from lettura_file import Leggi_file
     
     for i in range(len(boroughAnalizzati)):
         
-    header = ['Means Max Courses On NY', 'Means Min Courses On NY']
-
-    with open(pathSaving + '/output.csv', 'w', encoding='UTF8', newline='') as f:
-        writer = csv.writer(f)
-
-        # write the header
-        writer.writerow(header)
-
-        # write multiple rows
-        writer.writerows(data)
-
-    f.close()
-    return "File Generato"""
+        header = ['Means Max Courses On NY', 'Means Min Courses On NY']
+    
+        with open(pathSaving + '/output.csv', 'w', encoding='UTF8', newline='') as f:
+            writer = csv.writer(f)
+    
+            # write the header
+            writer.writerow(header)
+    
+            # write multiple rows
+            writer.writerows(data)
+    
+        f.close()
+    return "File Generato"
 
 
 def coverti_location_id(X, m=dict):
@@ -53,13 +51,6 @@ def coverti_location_id(X, m=dict):
             if X == m[i][j]:
                 X = i
                 return X
-
-
-# funzione che converte stringhe di data ed ora in timestamp
-def converti_timestamp(X):
-    ts = time.mktime(time.strptime(str(X), "%Y-%m-%d %H:%M:%S"))
-    return ts
-
 
 # funzione che restituisce solo la data da un stringa con data ed ora
 def converti_solo_data(X):
@@ -133,35 +124,7 @@ if __name__ == '__main__':
         numero_corse_per_borough = ad.conta_occorrenze(
             dati_filtrati[f"Pickup_Borough_{meseDaLeggere[mese_analizzato]}"])
         dict_numero_corse_per_borough[f'Corse_per_borough_{meseDaLeggere[mese_analizzato]}'] = numero_corse_per_borough
-
-    # Per ogni mese, calcolo la media di viaggi dei borough
-    # media_corse_per_borough = ad.media_viaggi_mese(numero_corse_per_borough)
-    # dict_media_corse_per_borough[f'{meseDaLeggere[mese_analizzato]}']= media_corse_per_borough
-
-    # agiunta per calcolo della media di corse mensili in quel determinato mese nel borough di partenza
-
-    now = datetime.now()
-    dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
-    path = './outputFile/' + dt_string
-    if (os.path.isdir(path) == False):
-        os.makedirs(path)
-    for i in range(len(boroughDaLeggere)):
-        indice = int(boroughDaLeggere[i])
-        media_corse_mese_borough[f"{boroughList[indice]}"] = {}
-        for mese_analizzato in range(len(meseDaLeggere)):
-            numeroCorse = dict_numero_corse_per_borough[f"Corse_per_borough_{meseDaLeggere[mese_analizzato]}"][
-                f"{boroughList[indice]}"]
-            media_corse_mese_borough[f"{boroughList[indice]}"][f"{meseDaLeggere[mese_analizzato]}"] = numeroCorse / len(
-                dict_numero_corse_giornaliere[f"{meseDaLeggere[mese_analizzato]}"])
-        borough = str(boroughList[indice])
-        plt.title('Analisi del Borough: ' + borough)
-        plt.bar(media_corse_mese_borough[f"{boroughList[indice]}"].keys(),
-                media_corse_mese_borough[f"{boroughList[indice]}"].values(), color='green')
-        plt.draw()
-        plt.xticks(rotation=30, ha='right')
-        plt.savefig(path + "/" + borough + ".png", bbox_inches='tight', dpi=1200)
-        plt.show()
-
+        (dt_string, path)=load.create_outputfile(dict_numero_corse_giornaliere, dict_numero_corse_per_borough, media_corse_mese_borough, boroughDaLeggere, meseDaLeggere)
     # Converto dizionario in dataFrame
     media_corse_dF = pd.DataFrame(dict_media_corse_mese.items(), columns=['Mese', 'Media'])
 
@@ -171,7 +134,7 @@ if __name__ == '__main__':
 
     # Plot: istogramma
     plot = ad.plot(media_corse_dF, dt_string)
-    #csvGenerator = generateCSV(mese_con_media_maggiore, mese_con_media_minore[0], media_corse_mese_borough, path)
+    csvGenerator = generateCSV(mese_con_media_maggiore, mese_con_media_minore[0], media_corse_mese_borough, path)
 
     # #Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
     # #la data del mese, e come valore la media aritmetica delle corse giornaliere sulle corse dell'intero mese
