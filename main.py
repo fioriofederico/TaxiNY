@@ -86,6 +86,7 @@ if __name__ == '__main__':
     dict_percentuale_corse_giornaliere = {}
     dict_percentuale_corse_per_borough = {}
     media_corse_mese_borough = {}
+    dict_borough_means={}
 
     for mese_analizzato in range(len(meseDaLeggere)):  # scorro la lista dei mesi
         # scarico i file
@@ -154,6 +155,8 @@ if __name__ == '__main__':
             media_corse_mese_borough[f"{boroughList[indice]}"][f"{meseDaLeggere[mese_analizzato]}"] = numeroCorse / len(
                 dict_numero_corse_giornaliere[f"{meseDaLeggere[mese_analizzato]}"])
         borough = str(boroughList[indice])
+        [f"{borough}"][max] = max(media_corse_mese_borough[f"{boroughList[indice]}"])
+        [f"{borough}"][min] = min(media_corse_mese_borough[f"{boroughList[indice]}"])
         plt.title('Analisi del Borough: ' + borough)
         plt.bar(media_corse_mese_borough[f"{boroughList[indice]}"].keys(),
                 media_corse_mese_borough[f"{boroughList[indice]}"].values(), color='green')
