@@ -177,6 +177,8 @@ class Analisi_dati():
         dt_string = pathFolder + '/ConfrontoMesiNy.jpg'
         media_corse_dF.plot(x = 'Mese', y = 'Media', color = 'green', kind = 'bar')
         plt.title('Media corse al mese')
+        plt.draw()
+        plt.xticks(rotation=30, ha='right')
         plt.savefig(dt_string, bbox_inches='tight', dpi=1200)
         plt.show()
        # plt.close()

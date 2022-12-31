@@ -20,11 +20,14 @@ from analisi_dati import Analisi_dati
 from lettura_file import Leggi_file
 
 
-def generateCSV(mediaMaxNy, mediaMinNy, boroughAnalizzati, pathSaving):
+"""def generateCSV(mediaMaxNy, mediaMinNy, boroughAnalizzati, pathSaving):
     data = [[mediaMaxNy, mediaMinNy]]
     print(len(boroughAnalizzati))
     print(mediaMinNy)
     print(mediaMaxNy)
+    
+    for i in range(len(boroughAnalizzati)):
+        
     header = ['Means Max Courses On NY', 'Means Min Courses On NY']
 
     with open(pathSaving + '/output.csv', 'w', encoding='UTF8', newline='') as f:
@@ -37,7 +40,7 @@ def generateCSV(mediaMaxNy, mediaMinNy, boroughAnalizzati, pathSaving):
         writer.writerows(data)
 
     f.close()
-    return "File Generato"
+    return "File Generato"""
 
 
 def coverti_location_id(X, m=dict):
@@ -154,6 +157,8 @@ if __name__ == '__main__':
         plt.title('Analisi del Borough: ' + borough)
         plt.bar(media_corse_mese_borough[f"{boroughList[indice]}"].keys(),
                 media_corse_mese_borough[f"{boroughList[indice]}"].values(), color='green')
+        plt.draw()
+        plt.xticks(rotation=30, ha='right')
         plt.savefig(path + "/" + borough + ".jpg", bbox_inches='tight', dpi=1200)
         plt.show()
 
@@ -166,7 +171,7 @@ if __name__ == '__main__':
 
     # Plot: istogramma
     plot = ad.plot(media_corse_dF, dt_string)
-    csvGenerator = generateCSV(mese_con_media_maggiore, mese_con_media_minore[0], media_corse_mese_borough, path)
+    #csvGenerator = generateCSV(mese_con_media_maggiore, mese_con_media_minore[0], media_corse_mese_borough, path)
 
     # #Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
     # #la data del mese, e come valore la media aritmetica delle corse giornaliere sulle corse dell'intero mese
@@ -177,6 +182,3 @@ if __name__ == '__main__':
     # percentuale_corse_per_borough = ad.percentuale_viaggi_al_mese(numero_corse_per_borough, numero_corse_mese)
     # dict_percentuale_corse_per_borough[f'Media_corse_borough_{meseDaLeggere[mese_analizzato]}']=percentuale_corse_per_borough
     # """
-    # TODO  aggiornare il plot per avere un folder di archiviazione
-    # TODO  aggiungere media minore
-    # TODO
