@@ -159,7 +159,7 @@ if __name__ == '__main__':
                 media_corse_mese_borough[f"{boroughList[indice]}"].values(), color='green')
         plt.draw()
         plt.xticks(rotation=30, ha='right')
-        plt.savefig(path + "/" + borough + ".jpg", bbox_inches='tight', dpi=1200)
+        plt.savefig(path + "/" + borough + ".png", bbox_inches='tight', dpi=1200)
         plt.show()
 
     # Converto dizionario in dataFrame
