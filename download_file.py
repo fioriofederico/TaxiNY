@@ -6,7 +6,9 @@ Created on Wed Dec 28 19:03:10 2022
 """
 import os
 import requests
+import matplotlib.pyplot as plt
 import pyarrow as pa
+from datetime import datetime
 
 class Download_file:
      
@@ -56,4 +58,28 @@ class Download_file:
             percorsoFileCsv = self.path + fileCsv
             return open(percorsoFileCsv, "wb").write(response.content)
 
-        
+    def create_outputfile(self, dict_numero_corse_giornaliere: dict, dict_numero_corse_per_borough: dict, media_corse_mese_borough: dict,boroughDaLeggere: list, meseDaLeggere: list):
+        boroughList = ["Bronx", "Brooklyn", "EWR", "Manhattan", "Queens", "Staten Island", "Unknown"]
+        now = datetime.now()
+        dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
+        path = './outputFile/' + dt_string
+        if (os.path.isdir(path) == False):
+            os.makedirs(path)
+        for i in range(len(boroughDaLeggere)):
+            indice = int(boroughDaLeggere[i])
+            media_corse_mese_borough[f"{boroughList[indice]}"] = {}
+            for mese_analizzato in range(len(meseDaLeggere)):
+                numeroCorse = dict_numero_corse_per_borough[f"Corse_per_borough_{meseDaLeggere[mese_analizzato]}"][f"{boroughList[indice]}"]
+                    
+                media_corse_mese_borough[f"{boroughList[indice]}"][f"{meseDaLeggere[mese_analizzato]}"] = numeroCorse / len(dict_numero_corse_giornaliere[f"{meseDaLeggere[mese_analizzato]}"])
+                    
+            borough = str(boroughList[indice])
+            plt.title('Analisi del Borough: ' + borough)
+            plt.bar(media_corse_mese_borough[f"{boroughList[indice]}"].keys(),
+                    media_corse_mese_borough[f"{boroughList[indice]}"].values(), color='green')
+            plt.draw()
+            plt.xticks(rotation=30, ha='right')
+            plt.savefig(path + "/" + borough + ".png", bbox_inches='tight', dpi=1200)
+            plt.show()
+        return dt_string, path
+         
