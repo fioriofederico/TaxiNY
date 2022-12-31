@@ -174,13 +174,12 @@ class Analisi_dati():
             Istogramma che contiene sull'asse delle x i mesi e su quello delle y le medie associate
         """
        # plt.figure(figsize=(1, 90000))
-        dt_string = './outputFile/' + pathFolder + '/ConfrontoMesiNy.png'
+        dt_string = './outputFile/' + pathFolder + '/ConfrontoMesiNy.jpg'
         media_corse_dF.plot(x = 'Mese', y = 'Media', color = 'green', kind = 'bar')
         plt.title('Media corse al mese')
         plt.draw()
         plt.xticks(rotation=30, ha='right')
         plt.savefig(dt_string, bbox_inches='tight', dpi=1200)
-        plt.show()
        # plt.close()
         return 
         

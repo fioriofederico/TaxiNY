@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 from download_file import Download_file
 from analisi_dati import Analisi_dati
 from lettura_file import Leggi_file
-
+from pdf import pdf
 
 """def generateCSV(mediaMaxNy, mediaMinNy, boroughAnalizzati, pathSaving):
     data = [[mediaMaxNy, mediaMinNy]]
@@ -159,8 +159,7 @@ if __name__ == '__main__':
                 media_corse_mese_borough[f"{boroughList[indice]}"].values(), color='green')
         plt.draw()
         plt.xticks(rotation=30, ha='right')
-        plt.savefig(path + "/" + borough + ".png", bbox_inches='tight', dpi=1200)
-        plt.show()
+        plt.savefig(path + "/" + borough + ".jpg", bbox_inches='tight', dpi=1200)
 
     # Converto dizionario in dataFrame
     media_corse_dF = pd.DataFrame(dict_media_corse_mese.items(), columns=['Mese', 'Media'])
@@ -182,3 +181,6 @@ if __name__ == '__main__':
     # percentuale_corse_per_borough = ad.percentuale_viaggi_al_mese(numero_corse_per_borough, numero_corse_mese)
     # dict_percentuale_corse_per_borough[f'Media_corse_borough_{meseDaLeggere[mese_analizzato]}']=percentuale_corse_per_borough
     # """
+    pdf = pdf()
+    meseDaLeggereString = ' '.join(meseDaLeggere)
+    pdf.newFile(path, meseDaLeggereString, mese_con_media_maggiore, str(dict_media_corse_mese[mese_con_media_maggiore]), mese_con_media_minore[0], str(dict_media_corse_mese[mese_con_media_minore[0]]),str(dict_numero_corse_per_borough))
