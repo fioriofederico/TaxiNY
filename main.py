@@ -86,7 +86,7 @@ if __name__ == '__main__':
     dict_percentuale_corse_giornaliere = {}
     dict_percentuale_corse_per_borough = {}
     media_corse_mese_borough = {}
-    dict_borough_means={}
+    dict_borough_means = {}
 
     for mese_analizzato in range(len(meseDaLeggere)):  # scorro la lista dei mesi
         # scarico i file
@@ -155,8 +155,12 @@ if __name__ == '__main__':
             media_corse_mese_borough[f"{boroughList[indice]}"][f"{meseDaLeggere[mese_analizzato]}"] = numeroCorse / len(
                 dict_numero_corse_giornaliere[f"{meseDaLeggere[mese_analizzato]}"])
         borough = str(boroughList[indice])
-        [f"{borough}"][max] = max(media_corse_mese_borough[f"{boroughList[indice]}"])
-        [f"{borough}"][min] = min(media_corse_mese_borough[f"{boroughList[indice]}"])
+
+        if borough not in dict_borough_means:
+            dict_borough_means[f"{borough}"] = {}
+
+        dict_borough_means[f"{borough}"]["max"] = max(media_corse_mese_borough[f"{boroughList[indice]}"])
+        dict_borough_means[f"{borough}"]["min"] = min(media_corse_mese_borough[f"{boroughList[indice]}"])
         plt.title('Analisi del Borough: ' + borough)
         plt.bar(media_corse_mese_borough[f"{boroughList[indice]}"].keys(),
                 media_corse_mese_borough[f"{boroughList[indice]}"].values(), color='green')
@@ -173,7 +177,7 @@ if __name__ == '__main__':
 
     # Plot: istogramma
     plot = ad.plot(media_corse_dF, dt_string)
-    #csvGenerator = generateCSV(mese_con_media_maggiore, mese_con_media_minore[0], media_corse_mese_borough, path)
+    # csvGenerator = generateCSV(mese_con_media_maggiore, mese_con_media_minore[0], media_corse_mese_borough, path)
 
     # #Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
     # #la data del mese, e come valore la media aritmetica delle corse giornaliere sulle corse dell'intero mese
@@ -184,6 +188,8 @@ if __name__ == '__main__':
     # percentuale_corse_per_borough = ad.percentuale_viaggi_al_mese(numero_corse_per_borough, numero_corse_mese)
     # dict_percentuale_corse_per_borough[f'Media_corse_borough_{meseDaLeggere[mese_analizzato]}']=percentuale_corse_per_borough
     # """
+
     pdf = pdf()
     meseDaLeggereString = ' '.join(meseDaLeggere)
-    pdf.newFile(path, meseDaLeggereString, mese_con_media_maggiore, str(dict_media_corse_mese[mese_con_media_maggiore]), mese_con_media_minore[0], str(dict_media_corse_mese[mese_con_media_minore[0]]),str(dict_numero_corse_per_borough))
+    pdf.newFile(path, meseDaLeggereString, mese_con_media_maggiore, str(dict_media_corse_mese[mese_con_media_maggiore]),
+                mese_con_media_minore[0], str(dict_media_corse_mese[mese_con_media_minore[0]]), dict_borough_means)

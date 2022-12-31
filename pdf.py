@@ -15,7 +15,7 @@ class pdf(FPDF):
         self.write(10,
                    "Questo programma fornisce uno studio sulla frequenza con la quale i taxi vengono utilizzati a NY. Per lo svolgimento della nostra analisi utilizziamo i dati pubblici delle rotte dei Taxi a NYC disponibili su https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page.")
         self.ln(5)
-        self.write(10,"Come da richiesta dell'operatore abbiamo analizzato i seguenti mesi:")
+        self.write(10, "Come da richiesta dell'operatore abbiamo analizzato i seguenti mesi:")
         self.ln(5)
         self.write(10, mesiAnalizzati)
         self.ln(5)
@@ -29,13 +29,23 @@ class pdf(FPDF):
         self.ln(5)
         self.write(10, "Valore visibile anche all'interno del grafico che segue")
         self.ln(5)
-        self.image(pathFile+'/ConfrontoMesiNy.jpg', 10, 120, 120)
+        self.image(pathFile + '/ConfrontoMesiNy.jpg', 10, 120, 120)
         self.ln(5)
         self.add_page()
         self.ln(20)
-        self.write(10, "Abbiamo inoltre deciso di effettuare la stessa analisi anche per ogni Borough presente a NY ottenendo i seguenti risultati:")
-        self.write(10, RisultatiBorough)
-        self.output(pathFile+'/OutputAnalisi.pdf', 'F')
+        self.write(10,
+                   "Abbiamo inoltre deciso di effettuare la stessa analisi anche per ogni Borough presente a NY ottenendo i seguenti risultati:")
+        for key, value in RisultatiBorough.items():
+            self.write(10, key)
+            print(key, value)
+            for key, value in value.items():
+                self.write(10, "Con Massima Media:")
+                self.write(10, key)
+                self.write(10, value)
+                print(key, value)
+            # self.image(pathFile + '/' + key +".jpg", 10, 120, 120)
+        self.ln(5)
+        self.output(pathFile + '/OutputAnalisi.pdf', 'F')
 
     def header(self):
         # Logo
