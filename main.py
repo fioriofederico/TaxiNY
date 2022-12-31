@@ -7,31 +7,41 @@ In quale periodo dell'anno i taxi vengono utilizzati di più? Creare un file di 
  più alta? E invece quello con la media giornaliera più bassa?
  
  """
+import os
 import time
 
 import pandas as pd
 import csv
+from datetime import datetime
+import matplotlib.pyplot as plt
 
-from download_file import Download_file 
+from download_file import Download_file
 from analisi_dati import Analisi_dati
 from lettura_file import Leggi_file
 
+"""def generateCSV(mediaMaxNy, mediaMinNy, boroughAnalizzati, pathSaving):
+    data = [[mediaMaxNy, mediaMinNy]]
+    print(len(boroughAnalizzati))
+    print(mediaMinNy)
+    print(mediaMaxNy)
 
-def generateCSV(mediaCorse, mediaBorough):
-    header = ['Media Corse', 'Media Corse Borough']
-    data = [[mediaCorse, mediaBorough]]
+    for i in range(len(boroughAnalizzati)):
 
-    with open('output.csv', 'w', encoding='UTF8', newline='') as f:
+    header = ['Means Max Courses On NY', 'Means Min Courses On NY']
+
+    with open(pathSaving + '/output.csv', 'w', encoding='UTF8', newline='') as f:
         writer = csv.writer(f)
 
-            # write the header
+        # write the header
         writer.writerow(header)
 
-            # write multiple rows
+        # write multiple rows
         writer.writerows(data)
 
     f.close()
-    return "File Generato"
+    return "File Generato"""
+
+
 def coverti_location_id(X, m=dict):
     """
     funzione aplicabile ad una series, che riconsce gli id delle location 
@@ -62,8 +72,8 @@ if __name__ == '__main__':
     # split mi restituisce una lista di stringhe, cioè la lista di mesi che do in input
     # dati_filtrati= pd.DataFrame() #inizializzo dataFrame vuoto dei risultati
     boroughDaLeggere = input("Quali borough vuoi analizzare?\n -0 Bronx\n -1 Brooklyn\n -2 EWR\n"
-                                         " -3 Manhattan\n -4 Queens\n -5 Staten Island\n -6 Unknown\n "
-                                         "Inserire il valore corrispondente al borough da analizzare: ")
+                             " -3 Manhattan\n -4 Queens\n -5 Staten Island\n -6 Unknown\n "
+                             "Inserire il valore corrispondente al borough da analizzare: ")
     boroughDaLeggere = boroughDaLeggere.split(' ')
     boroughList = ["Bronx", "Brooklyn", "EWR", "Manhattan", "Queens", "Staten Island", "Unknown"]
     numero_corse_giornaliere = {}
@@ -79,7 +89,6 @@ if __name__ == '__main__':
         load= Download_file()
         load.check_or_download_file_parquet(meseDaLeggere[mese_analizzato])
         load.check_or_download_file_csv()
-        
 
         lf = Leggi_file(meseDaLeggere[mese_analizzato])
         ad = Analisi_dati()
@@ -118,8 +127,8 @@ if __name__ == '__main__':
         dict_media_corse_mese[f'{meseDaLeggere[mese_analizzato]}'] = media_corse_mese
 
         # CALCOLO LE STESSE INFORMAZIONI PER BOROUGH
-        numero_corse_per_borough = ad.conta_occorrenze()
-        dati_filtrati([f"Pickup_Borough_{meseDaLeggere[mese_analizzato]}"])
+        numero_corse_per_borough = ad.conta_occorrenze(
+            dati_filtrati[f"Pickup_Borough_{meseDaLeggere[mese_analizzato]}"])
         dict_numero_corse_per_borough[f'Corse_per_borough_{meseDaLeggere[mese_analizzato]}'] = numero_corse_per_borough
 
         # Per ogni mese, calcolo la media di viaggi dei borough
@@ -127,12 +136,29 @@ if __name__ == '__main__':
         # dict_media_corse_per_borough[f'{meseDaLeggere[mese_analizzato]}']= media_corse_per_borough
 
         #agiunta per calcolo della media di corse mensili in quel determinato mese nel borough di partenza
+        now = datetime.now()
+        dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
+        path = './outputFile/' + dt_string
+        if (os.path.isdir(path) == False):
+            os.makedirs(path)
         for i in range(len(boroughDaLeggere)):
-             indice=int(boroughDaLeggere[i])
-             numeroCorse = numero_corse_per_borough[boroughList[indice]]
-             media_corse_mese_borough[f"{meseDaLeggere[mese_analizzato]}_{boroughList[indice]}"] = numeroCorse / len(numero_corse_giornaliere.keys())
-             plot = ad.plot(media_corse_mese_borough)
-        print(media_corse_mese_borough)
+            indice = int(boroughDaLeggere[i])
+            media_corse_mese_borough[f"{boroughList[indice]}"] = {}
+            for mese_analizzato in range(len(meseDaLeggere)):
+                numeroCorse = dict_numero_corse_per_borough[f"Corse_per_borough_{meseDaLeggere[mese_analizzato]}"][
+                    f"{boroughList[indice]}"]
+                media_corse_mese_borough[f"{boroughList[indice]}"][
+                    f"{meseDaLeggere[mese_analizzato]}"] = numeroCorse / len(
+                    dict_numero_corse_giornaliere[f"{meseDaLeggere[mese_analizzato]}"])
+            borough = str(boroughList[indice])
+            plt.title('Analisi del Borough: ' + borough)
+            plt.bar(media_corse_mese_borough[f"{boroughList[indice]}"].keys(),
+                    media_corse_mese_borough[f"{boroughList[indice]}"].values(), color='green')
+            plt.draw()
+            plt.xticks(rotation=30, ha='right')
+            plt.savefig(path + "/" + borough + ".png", bbox_inches='tight', dpi=1200)
+            plt.show()
+
     # Converto dizionario in dataFrame
     media_corse_dF = pd.DataFrame(dict_media_corse_mese.items(), columns=['Mese', 'Media'])
 
@@ -142,7 +168,7 @@ if __name__ == '__main__':
 
     # Plot: istogramma
     plot = ad.plot(media_corse_dF)
-    csvGenerator = generateCSV(mese_con_media_maggiore,'99')
+    #csvGenerator = generateCSV(mese_con_media_maggiore,'99')
 
     # #Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
     # #la data del mese, e come valore la media aritmetica delle corse giornaliere sulle corse dell'intero mese
@@ -153,6 +179,3 @@ if __name__ == '__main__':
     # percentuale_corse_per_borough = ad.percentuale_viaggi_al_mese(numero_corse_per_borough, numero_corse_mese)
     # dict_percentuale_corse_per_borough[f'Media_corse_borough_{meseDaLeggere[mese_analizzato]}']=percentuale_corse_per_borough
     # """
-    #TODO  aggiornare il plot per avere un folder di archiviazione
-    #TODO  aggiungere media minore
-    #TODO 
