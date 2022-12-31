@@ -8,22 +8,22 @@ Per lo svolgimento di quest’analisi utilizziamo i dati pubblici delle rotte de
 
 ## Svolgimento dell’analisi
 
-###### Download dei dati
+#### Download dei dati
 
 Per svolgere l’analisi è necessario effettuare il download dei dati da analizzare. In particolare, ci soffermiamo sul dataset di Yellow Taxi Trip Records (CSV) 2022 (https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page).
 I dati vengono quindi inseriti in un dataframe in ambiente Spyder. 
 
-###### Analisi preliminare
+#### Analisi preliminare
 
 Durante un’analisi preliminare del dataset, il dataframe viene filtrato per considerare solo le series che contengono i dati di nostro interesse. In particolare, ci soffermiamo sulla parte relativa alle date di partenza/arrivo dei taxi e ai rispettivi borough in cui vengono adoperati, a ognuno dei quali viene associato un codice identificativo (locationID). Inoltre, gli stessi set relativi alle date di partenza dei taxi, vengono filtrati, eliminando l’orario di prelievo del cliente, poiché superfluo ai fini dell’analisi. 
 
 
-###### Input
+#### Input
 
 Nella fase di input viene richiesto il periodo/i di cui si vuole effettuare l’analisi, che devono essere forniti secondo il formato anno-mese e intervallati da spazi (es. 2022-01 2022-02), e l’identificativo del/i borough da considerare (che viene assegnato secondo la legenda presente nel testo della richiesta di input), anch’essi inseriti intervallati da spazi (es. 0 1 2).
 
 ```
-Quali mesi vuoi analizzare? (formato input: anno-mese, diviso da spazi): 2022-01 2022-02
+Quali mesi vuoi analizzare? (formato input: anno-mese, diviso da spazi): 2020-04 2020-05
 ```
 ```
 Quali borough vuoi analizzare?
@@ -34,23 +34,23 @@ Quali borough vuoi analizzare?
  -4 Queens
  -5 Staten Island
  -6 Unknown
- Inserire il valore corrispondente al borough da analizzare: 0 1 2
+ Inserire il valore corrispondente al borough da analizzare: 1 
  ```
  
-###### Analisi dei dati
+#### Analisi dei dati
 
 Nella parte relativa all’analisi dei dati, i datasets vengono ulteriormente filtrati, per eliminare i dati non validi e i valori NaN che potrebbero portare l’analisi ad un risultato errato.
 In seguito, viene valutato il periodo di maggiore e minore frequenza di utilizzo dei taxi, attraverso il confronto della media delle corse relative ad ogni mese. 
 Viene quindi calcolata la media aritmetica delle corse del mese in esame sui giorni dell’intero mese, e viene ripetuta la stessa analisi considerando la media mensile per ogni borough fornito nella fase di input. 
 
-###### Ouput
+#### Ouput
 
 Il prodotto dell’analisi dei dataset è facilmente interpretabile attraverso lo studio dei grafici che vengono forniti in output. In particolare, viene restituito un istogramma che mostra la media aritmetica per ogni mese considerato, e la media per ogni borough.
 Inoltre, il risultato dell’analisi viene fornito attraverso una stringa che restituisce il mese, fra quelli in esame, che ha riscontrato la media di viaggi mensile maggiore, e quello che invece ha riscontrato la media minore.
 
 Esempio:
 
-<img alt="il seguente output mostra l&#39;intera città di NY" height="800" src="./data/img/ConfrontoMesiNy.png" title="Output Su Ny"/>
-<img alt="il seguente output mostra solo il borough di Broklyn" height="800" src="./data/img/Brooklyn.png" title="Output Borough Brooklyn"/>
+<img alt="il seguente output mostra l&#39;intera città di NY" height="350" src="./data/img/ConfrontoMesiNy.png" title="Output Su Ny"/>
+<img alt="il seguente output mostra solo il borough di Broklyn" height="350" src="./data/img/Brooklyn.png" title="Output Borough Brooklyn"/>
 
 
