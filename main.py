@@ -159,8 +159,10 @@ if __name__ == '__main__':
         if borough not in dict_borough_means:
             dict_borough_means[f"{borough}"] = {}
 
-        dict_borough_means[f"{borough}"]["max"] = max(media_corse_mese_borough[f"{boroughList[indice]}"])
-        dict_borough_means[f"{borough}"]["min"] = min(media_corse_mese_borough[f"{boroughList[indice]}"])
+        dict_borough_means[f"{borough}"]["meseConMediaMaggiore"] = max(media_corse_mese_borough[f"{boroughList[indice]}"])
+        dict_borough_means[f"{borough}"]["valoreMediaMaggiore"] = str(max(media_corse_mese_borough[f"{boroughList[indice]}"].values()))
+        dict_borough_means[f"{borough}"]["meseConMediaMinore"] = min(media_corse_mese_borough[f"{boroughList[indice]}"])
+        dict_borough_means[f"{borough}"]["valoreMediaMinore"] = str(min(media_corse_mese_borough[f"{boroughList[indice]}"].values()))
         plt.title('Analisi del Borough: ' + borough)
         plt.bar(media_corse_mese_borough[f"{boroughList[indice]}"].keys(),
                 media_corse_mese_borough[f"{boroughList[indice]}"].values(), color='green')

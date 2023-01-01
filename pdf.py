@@ -35,15 +35,18 @@ class pdf(FPDF):
         self.ln(20)
         self.write(10,
                    "Abbiamo inoltre deciso di effettuare la stessa analisi anche per ogni Borough presente a NY ottenendo i seguenti risultati:")
-        for key, value in RisultatiBorough.items():
-            self.write(10, key)
-            print(key, value)
+        for borough, value in RisultatiBorough.items():
+            self.ln(5)
+            self.write(10, borough)
+            self.ln(5)
             for key, value in value.items():
-                self.write(10, "Con Massima Media:")
                 self.write(10, key)
+                self.write(10," : ")
                 self.write(10, value)
-                print(key, value)
-            # self.image(pathFile + '/' + key +".jpg", 10, 120, 120)
+                self.ln(5)
+            self.image(pathFile + '/' + borough +".jpg", 10, 100, 140)
+            self.add_page()
+            self.ln(20)
         self.ln(5)
         self.output(pathFile + '/OutputAnalisi.pdf', 'F')
 
