@@ -53,4 +53,6 @@ Esempio:
 <img alt="il seguente output mostra l&#39;intera città di NY" height="350" src="./data/img/ConfrontoMesiNy.png" title="Output Su Ny"/>
 <img alt="il seguente output mostra solo il borough di Broklyn" height="350" src="./data/img/Brooklyn.png" title="Output Borough Brooklyn"/>
 
+Inoltre abbiamo aggiunto la possibilità di avere in output dei file pdf con un minimo di visione complessiva dei dati.
+Dall'analisi che abbiamo potuto effettuare ci siamo resi conto che prima dell'avvento del lockdown
 
