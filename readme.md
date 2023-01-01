@@ -53,6 +53,18 @@ Esempio:
 <img alt="il seguente output mostra l&#39;intera città di NY" height="350" src="./data/img/ConfrontoMesiNy.png" title="Output Su Ny"/>
 <img alt="il seguente output mostra solo il borough di Broklyn" height="350" src="./data/img/Brooklyn.png" title="Output Borough Brooklyn"/>
 
+
+#### Considerazioni Finali dell'Analisi
 Inoltre abbiamo aggiunto la possibilità di avere in output dei file pdf con un minimo di visione complessiva dei dati.
-Dall'analisi che abbiamo potuto effettuare ci siamo resi conto che prima dell'avvento del lockdown
+Dall'analisi che abbiamo potuto effettuare ci siamo resi conto che prima dell'avvento del lockdown nel mese di marzo 2020 l'andamento annuale più o meno rispettava le stesse caratteristiche. 
+
+La considerazione che abbiamo potuto fare a questo seguito che durante l'arco di mesi tra Febbraio - Aprile ci si ritrova il picco delle corse, invece durante l'intervallo tra il mese di Luglio-Agosto-Settembre si trova la mensilità con una media giornaliera di meno corso.
+
+Per quanto abbiamo potuto notare applicando l'analisi anche hai singoli Borough che la maggior parte delle corse si svolgono all'interno del Borough di Manhattan avvengo la maggior parte di corse annuali anche medie di corse giornaliere supreiori alle 400000.
+
+Come potevamo immaginare il Borough con meno corse si è rilevato essere Staten Island, e subito sopra troviamo EWR.
+
+Si può gia vedere dal menù al momento dell'esecuzione del codice la presenza del Borough Unknown che sono delle corse che arrivano in alcuni strade ancora non appartenenti a un Borough.
+
+Questa media di corse comunque non era tralasciabile, in quanto il valore si aggira attorno a un 6000 corse mensili. 
 
