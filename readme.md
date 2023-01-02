@@ -56,16 +56,16 @@ Esempio:
 
 #### Considerazioni Finali dell'Analisi
 Inoltre abbiamo aggiunto la possibilità di avere in output dei file pdf con un minimo di visione complessiva dei dati.
-Dall'analisi che abbiamo potuto effettuare ci siamo resi conto che prima dell'avvento del lockdown nel mese di marzo 2020 l'andamento annuale più o meno rispettava le stesse caratteristiche. 
+Dall'analisi che abbiamo potuto effettuare ci siamo resi conto che prima dell'avvento del lockdown nel mese di marzo 2020 l'andamento annuale più o meno rispettava le stesse caratteristiche anno per anno. 
 Chiaramente, un evento eccezzionale come è stata la pandemia nel 2020 non ha permesso di effettuare un confronto troppo veritiero per l'intervallo degli ultimi 2 anni, a differenza degli anni precedenti.
 
-La considerazione che abbiamo potuto fare a questo seguito che durante l'arco di mesi tra Febbraio - Aprile ci si ritrova il picco delle corse, invece durante l'intervallo tra il mese di Luglio-Agosto-Settembre si trova la mensilità con una media giornaliera di meno corso.
+La considerazione che abbiamo potuto fare a seguito di questo che durante l'arco di mesi tra Febbraio - Aprile ci si ritrova il picco delle corse, invece durante l'intervallo tra il mese di Luglio-Agosto-Settembre si trova la mensilità con una media giornaliera di meno corse.
 
 Per quanto abbiamo potuto notare applicando l'analisi anche hai singoli Borough che la maggior parte delle corse si svolgono all'interno del Borough di Manhattan avvengo la maggior parte di corse annuali anche medie di corse giornaliere supreiori alle 400000.
 
 Il Borough con meno corse si è rilevato essere Staten Island, e subito sopra troviamo EWR.
 
-Inoltre facendo un controllo negli anni si vede che il numero mendie di corse è venuto a mancare probabilmente dovuto sia alla questione dell'avvento di Uber e altri servizi simili, e alla prasenza di dati anche di taxi di altri colori e non solo yellow.
+Inoltre facendo un controllo negli anni si vede che il numero mendie di corse è venuto a mancare probabilmente dovuto sia alla questione dell'avvento di Uber e altri servizi simili, e alla presenza di dati anche di taxi di altri colori e non solo yellow.
 
 Si può gia vedere dal menù al momento dell'esecuzione del codice la presenza del Borough Unknown che sono delle corse che arrivano in alcuni strade ancora non appartenenti a un Borough.
 
