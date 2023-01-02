@@ -8,7 +8,7 @@ Created on Sat Dec 10 15:50:13 2022
 import pandas as pd
 import matplotlib.pyplot as plt
 
-class Analisi_dati():
+class Analisi_dati:
     
     """
      Analisi del file csv: calcolo del numero medio di viaggi al giorno rispetto all'intero mese
