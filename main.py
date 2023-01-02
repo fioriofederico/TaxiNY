@@ -131,10 +131,8 @@ if __name__ == '__main__':
 
         # aggiungo un series al dataframe in cui le data delle partenze vengono sostituite da timestamp
         # dati_filtrati_jenuary["ts_pickup"]=dati_filtrati_jenuary['tpep_pickup_datetime'].apply(converti_timestamp)
-        dati_filtrati[f'Pickup_Borough_{meseDaLeggere[mese_analizzato]}'] = dati_filtrati[
-            f"PULocationID_{meseDaLeggere[mese_analizzato]}"].apply(coverti_location_id, m=borough_id)
-        dati_filtrati[f"data_pickup_{meseDaLeggere[mese_analizzato]}"] = dati_filtrati[
-            f'tpep_pickup_datetime_{meseDaLeggere[mese_analizzato]}'].apply(converti_solo_data)
+        dati_filtrati[f'Pickup_Borough_{meseDaLeggere[mese_analizzato]}'] = dati_filtrati[f"PULocationID_{meseDaLeggere[mese_analizzato]}"].apply(coverti_location_id, m=borough_id)
+        dati_filtrati[f"data_pickup_{meseDaLeggere[mese_analizzato]}"] = dati_filtrati[f'tpep_pickup_datetime_{meseDaLeggere[mese_analizzato]}'].apply(converti_solo_data)
 
         # Dizionario di dizionari: dizionario che associa ad ogni mese un dizionario che ha come chiave
         # la data del mese, e come valore il numero di corse in quella data
@@ -145,10 +143,9 @@ if __name__ == '__main__':
         dict_media_corse_mese[f'{meseDaLeggere[mese_analizzato]}'] = media_corse_mese
 
         # CALCOLO LE STESSE INFORMAZIONI PER BOROUGH
-        numero_corse_per_borough = ad.conta_occorrenze(
-            dati_filtrati[f"Pickup_Borough_{meseDaLeggere[mese_analizzato]}"])
+        numero_corse_per_borough = ad.conta_occorrenze(dati_filtrati[f"Pickup_Borough_{meseDaLeggere[mese_analizzato]}"])
         dict_numero_corse_per_borough[f'Corse_per_borough_{meseDaLeggere[mese_analizzato]}'] = numero_corse_per_borough
-        (dt_string, path)=load.create_outputfile(dict_numero_corse_giornaliere, dict_numero_corse_per_borough, media_corse_mese_borough, boroughDaLeggere, meseDaLeggere)
+    (dt_string, path)=load.create_outputfile(dict_numero_corse_giornaliere, dict_numero_corse_per_borough, media_corse_mese_borough, boroughDaLeggere, meseDaLeggere)
     # Converto dizionario in dataFrame
     media_corse_dF = pd.DataFrame(dict_media_corse_mese.items(), columns=['Mese', 'Media'])
 
