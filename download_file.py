@@ -7,7 +7,6 @@ Created on Wed Dec 28 19:03:10 2022
 import os
 import requests
 import matplotlib.pyplot as plt
-import pyarrow as pa
 from datetime import datetime
 
 class Download_file:
@@ -78,6 +77,8 @@ class Download_file:
         -------
         dt_string : nome della cartella
         path : path della cartella creata
+        dict_borough_means: un dizionario in cui vengono messi i valori di media maggiore e minore
+                            per lo specifico borough
         
         """
         
