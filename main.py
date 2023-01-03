@@ -20,12 +20,8 @@ from analisi_dati import Analisi_dati
 from lettura_file import Leggi_file
 from pdf import pdf
 
-def generateCSV(mediaMaxNy, mediaMinNy, boroughAnalizzati, pathSaving):
+"""def generateCSV(mediaMaxNy, mediaMinNy, boroughAnalizzati, pathSaving):
     data = [[mediaMaxNy, mediaMinNy]]
-    print(len(boroughAnalizzati))
-    print(mediaMinNy)
-    print(mediaMaxNy)
-    
     for i in range(len(boroughAnalizzati)):
         
     header = ['Means Max Courses On NY', 'Means Min Courses On NY']
@@ -41,7 +37,7 @@ def generateCSV(mediaMaxNy, mediaMinNy, boroughAnalizzati, pathSaving):
 
     f.close()
     return "File Generato"
-
+"""
 
 def coverti_location_id(X, m=dict):
     """
@@ -134,7 +130,7 @@ if __name__ == '__main__':
         numero_corse_per_borough = ad.conta_occorrenze(
             dati_filtrati[f"Pickup_Borough_{meseDaLeggere[mese_analizzato]}"])
         dict_numero_corse_per_borough[f'Corse_per_borough_{meseDaLeggere[mese_analizzato]}'] = numero_corse_per_borough
-    (dt_string, path)=load.create_outputfile(dict_numero_corse_giornaliere, dict_numero_corse_per_borough, media_corse_mese_borough, boroughDaLeggere, meseDaLeggere)
+    (dt_string, path, dict_borough_means)=load.create_outputfile(dict_numero_corse_giornaliere, dict_numero_corse_per_borough, media_corse_mese_borough, boroughDaLeggere, meseDaLeggere)
     """borough = str(boroughList[indice])
 
         if borough not in dict_borough_means:
@@ -182,7 +178,7 @@ if __name__ == '__main__':
 
     # Plot: istogramma
     plot = ad.plot(media_corse_dF, dt_string)
-    csvGenerator = generateCSV(mese_con_media_maggiore, mese_con_media_minore[0], media_corse_mese_borough, path)
+    #csvGenerator = generateCSV(mese_con_media_maggiore, mese_con_media_minore[0], media_corse_mese_borough, path)
 
     pdf = pdf()
     meseDaLeggereString = ' '.join(meseDaLeggere)

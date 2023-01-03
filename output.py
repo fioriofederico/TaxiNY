@@ -7,7 +7,7 @@ def construct():
     # Iterate over all months in 2020 except January
     for i in range(2, 13):
         # Save visualization
-        plot(data=generate_sales_data(month=i), filename=f'{PLOT_DIR}/{i}.png')
+        plot(data=generate_sales_data(month=i), filename=f'{PLOT_DIR}/{i}.jpg')
 
     # Construct data shown in document
     counter = 0

@@ -85,6 +85,7 @@ class Download_file:
         now = datetime.now()
         dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
         path = './outputFile/' + dt_string
+        dict_borough_means = {}
         if (os.path.isdir(path) == False):
             os.makedirs(path)
         for i in range(len(boroughDaLeggere)):
@@ -96,12 +97,19 @@ class Download_file:
                 media_corse_mese_borough[f"{boroughList[indice]}"][f"{meseDaLeggere[mese_analizzato]}"] = numeroCorse / len(dict_numero_corse_giornaliere[f"{meseDaLeggere[mese_analizzato]}"])
                     
             borough = str(boroughList[indice])
+
+            if borough not in dict_borough_means:
+                dict_borough_means[f"{borough}"] = {}
+            dict_borough_means[f"{borough}"]["valoreMediaMaggiore"] = str(
+                max(media_corse_mese_borough[f"{boroughList[indice]}"].values()))
+            dict_borough_means[f"{borough}"]["valoreMediaMinore"] = str(
+                min(media_corse_mese_borough[f"{boroughList[indice]}"].values()))
             plt.title('Analisi del Borough: ' + borough)
             plt.bar(media_corse_mese_borough[f"{boroughList[indice]}"].keys(),
                     media_corse_mese_borough[f"{boroughList[indice]}"].values(), color='green')
             plt.draw()
             plt.xticks(rotation=30, ha='right')
-            plt.savefig(path + "/" + borough + ".png", bbox_inches='tight', dpi=1200)
+            plt.savefig(path + "/" + borough + ".jpg", bbox_inches='tight', dpi=1200)
             plt.show()
-        return dt_string, path
+        return dt_string, path, dict_borough_means
          
